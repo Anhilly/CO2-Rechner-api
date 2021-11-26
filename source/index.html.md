@@ -24,18 +24,64 @@ meta:
 
 Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 
-# Umfrage
+# Umfrage Mitarbeiter
 
 ## POST der Umfrage
 Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Daten für den CO2 Fußabdruck und sendet diese als antwort.
 >Request JSON
 
 ```json
-()
+{
+  "pendelweg": [
+    {
+      "strecke": 123,
+      "medium": "PKW (Diesel)" // oder PKW (Benzin)
+    }
+  ],
+  "tageImBuero": 7, //Luis style, pro Woche
+  "dienstreise":[
+    {
+      "medium": "Flugzeug",
+      "streckentyp": "Langstrecke",
+      "strecke": 800, //In km
+      "tankart": ""
+    }
+  ],
+  "itGeraete": [
+    {
+      "kategorie": "Notebook",
+      "anzahl": 1
+    }
+  ]
+}
 ```
 
 >Response JSON
 
 ```json
 ()
+```
+
+# Umfrage Hauptverantwortlicher
+
+## POST der Umfrage
+>Request JSON
+
+```json
+{
+  "gebaeude": [
+    {
+      "gebaeudeNr": "S201",
+      "flaechenanteil": 35
+    }
+  ],
+  "anzahlMitarbeiter": 24,
+  "itGeraete": [
+    {
+      "kategorie": "Server", //Bitte nur Server, Drucker...
+      "anzahl": 5
+    }
+  ],
+  "papierverbrauch": 13 //in kilo
+}
 ```
