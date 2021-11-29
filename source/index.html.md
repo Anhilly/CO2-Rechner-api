@@ -34,25 +34,26 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
 {
   "pendelweg": [
     {
-      "strecke": 123,
-      "medium": "PKW (Diesel)" // oder PKW (Benzin)
+      "strecke": 123,   //Integer, in km
+      "idPendelweg": 1  //Integer, korrespondieren mit Index in Datenbank
     }
   ],
-  "tageImBuero": 7, //Luis style, pro Woche
+  "tageImBuero": 7, //Integer
   "dienstreise":[
     {
-      "medium": "Flugzeug",
+      "idDienstreise": 2,  //Integer, korrespondieren mit Index in Datenbank
       "streckentyp": "Langstrecke",
-      "strecke": 800, //In km
+      "strecke": 800, //Integer, in km
       "tankart": ""
     }
   ],
   "itGeraete": [
     {
-      "kategorie": "Notebook",
+      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
       "anzahl": 1
     }
-  ]
+  ],
+  "papierverbrauch": 13 //Datentyp?
 }
 ```
 
@@ -78,11 +79,10 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
   "anzahlMitarbeiter": 24,
   "itGeraete": [
     {
-      "kategorie": "Server", //Bitte nur Server, Drucker...
+      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
       "anzahl": 5
     }
-  ],
-  "papierverbrauch": 13 //in kilo
+  ]
 }
 ```
 
