@@ -85,3 +85,16 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
   "papierverbrauch": 13 //in kilo
 }
 ```
+
+>Response JSON
+
+```json
+{
+  "kaelteEmissionen": 0.0,
+	"waermeEmissionen": 0.0,
+	"stromEmissionen": 0.0,
+	"itGeraeteEmissionen": 0.0,
+	"dienstreisenEmissionen": 0.0,
+	"pendelwegeEmissionen": 0.0
+}
+```
