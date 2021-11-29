@@ -72,7 +72,7 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
   "gebaeude": [
     {
       "gebaeudeNr": "S201",
-      "flaechenanteil": 35
+      "flaechenanteil": 35  //Integer
     }
   ],
   "anzahlMitarbeiter": 24,
@@ -91,10 +91,10 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
 ```json
 {
   "kaelteEmissionen": 0.0,
-	"waermeEmissionen": 0.0,
-	"stromEmissionen": 0.0,
-	"itGeraeteEmissionen": 0.0,
-	"dienstreisenEmissionen": 0.0,
-	"pendelwegeEmissionen": 0.0
+  "waermeEmissionen": 0.0,
+  "stromEmissionen": 0.0,
+  "itGeraeteEmissionen": 0.0,
+  "dienstreisenEmissionen": 0.0,
+  "pendelwegeEmissionen": 0.0
 }
 ```
