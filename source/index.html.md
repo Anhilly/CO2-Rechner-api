@@ -52,8 +52,7 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
       "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
       "anzahl": 1
     }
-  ],
-  "papierverbrauch": 13 //Datentyp?
+  ]
 }
 ```
 
