@@ -36,6 +36,7 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
     {
       "strecke": 123,   //Integer, in km
       "idPendelweg": 1  //Integer, korrespondieren mit Index in Datenbank
+      "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
     }
   ],
   "tageImBuero": 7, //Integer
