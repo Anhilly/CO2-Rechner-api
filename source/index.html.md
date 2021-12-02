@@ -72,7 +72,7 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
 {
   "gebaeude": [
     {
-      "gebaeudeNr": "S201",
+      "gebaeudeNr": 1201,   //Integer
       "flaechenanteil": 35  //Integer
     }
   ],
