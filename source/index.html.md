@@ -100,7 +100,7 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
 ```
 
 
-# Amdinoberfläche: Eintragen von Daten
+# Adminoberfläche: Eintragen von Daten
 
 URL: example.de/db/*
 
