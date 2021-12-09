@@ -98,3 +98,62 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
   "pendelwegeEmissionen": 0.0
 }
 ```
+
+
+# Amdinoberfläche: Eintragen von Daten
+
+URL: example.de/db/*
+
+## Neuer CO2-Faktor für Energie
+>Request JSON
+
+```json
+{
+  "idEnergieversorgung": 1, //Integer
+  "jahr": 2020,             //Integer
+  "wert": 2000              //Integer
+}
+```
+
+## Zählerdaten
+>Request JSON
+
+```json
+{
+  "pkEnergie": 1,   //Integer
+  "jahr": 2020,     //Integer
+  "wert": 2000      //Integer
+}
+```
+
+## Zähler hinzufügen
+>Request JSON
+
+```json
+{
+  "pkEnergie": 1,           //Integer
+  "idEnergieversorgung": 1, //Integer
+  "bezeichnung": "",
+  "einheit": "",
+  "gebaeudeRef": []         //Array an Integers
+}
+```
+
+## Gebäude hinzufügen
+>Request JSON
+
+```json
+{
+  "nr": 1101,               //Integer
+  "bezeichnung": "",
+  "flaeche": {
+    "hnf": 0.0,
+    "nnf": 0.0,
+    "ngf": 0.0,
+    "ff": 0.0,
+    "vf": 0.0,
+    "freif": 0.0,
+    "gesamtf": 0.0
+  }
+}
+```
