@@ -104,7 +104,7 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
 
 URL: example.de/db/*
 
-## Neuer CO2-Faktor für Energie
+## Post neuer CO2-Faktor für Energie
 URL: example.de/db/addFaktor
 
 >Request JSON
@@ -117,7 +117,7 @@ URL: example.de/db/addFaktor
 }
 ```
 
-## Zählerdaten
+## Post Zählerdaten
 URL: example.de/db/addZaehlerdaten
 
 >Request JSON
@@ -130,8 +130,8 @@ URL: example.de/db/addZaehlerdaten
 }
 ```
 
-## Zähler hinzufügen
-URL: example.de/db/addZaehler
+## Post Zähler hinzufügen
+URL: example.de/db/insertZaehler
 
 >Request JSON
 
@@ -145,8 +145,8 @@ URL: example.de/db/addZaehler
 }
 ```
 
-## Gebäude hinzufügen
-URL: example.de/db/addGebaeude
+## Post Gebäude hinzufügen
+URL: example.de/db/insertGebaeude
 
 >Request JSON
 
