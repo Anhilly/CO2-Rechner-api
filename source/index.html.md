@@ -126,7 +126,7 @@ URL: example.de/db/addZaehlerdaten
 {
   "pkEnergie": 1,   //Integer
   "jahr": 2020,     //Integer
-  "wert": 2000      //Integer
+  "wert": 2000.0    //float
 }
 ```
 
