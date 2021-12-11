@@ -125,6 +125,7 @@ URL: example.de/db/addZaehlerdaten
 ```json
 {
   "pkEnergie": 1,   //Integer
+  "idEnergieversorgung": 1, //Integer
   "jahr": 2020,     //Integer
   "wert": 2000.0    //float
 }
