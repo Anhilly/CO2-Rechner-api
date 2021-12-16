@@ -307,6 +307,7 @@ URL: `POST */db/insertGebaeude`
 
 ## Post Registrieren und Anmelden
 URL zum Registrieren: `POST */auth/registrierung`
+
 URL zum Anmelden: `POST */auth/anmeldung` 
 
 >Request JSON
