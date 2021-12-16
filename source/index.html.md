@@ -16,8 +16,8 @@ search: true
 code_clipboard: true
 
 meta:
-  - name: description
-    content: Documentation for the Kittn API
+  - name: API des CO2-Rechner der TU-Darmstadt
+    content: Dokumentation für die API des CO2-Rechners der TU-Darmstadt entwickelt für das Büro für Nachhaltigkeit
 ---
 
 # Introduction
@@ -28,6 +28,9 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 
 ## POST der Umfrage
 Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Daten für den CO2 Fußabdruck und sendet diese als antwort.
+
+URL: `POST */umfrage/mitarbeiter`
+
 >Request JSON
 
 ```json
@@ -35,7 +38,7 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
   "pendelweg": [
     {
       "strecke": 123,   //Integer, in km
-      "idPendelweg": 1  //Integer, korrespondieren mit Index in Datenbank
+      "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
       "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
     }
   ],
@@ -57,15 +60,39 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
 }
 ```
 
->Response JSON
+>Response JSON im Erfolgsfall
 
 ```json
-()
+{
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "pendelwegeEmissionen": 12.457, //Float 
+    "dienstreisenEmissionen": 42.120, //Float
+    "itGeraeteEmissionen": 123456.789 //Float
+  },
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
 ```
 
 # Umfrage Hauptverantwortlicher
 
 ## POST der Umfrage
+
+URL: `POST */umfrage/hauptverantwortlicher`
+
 >Request JSON
 
 ```json
@@ -86,26 +113,41 @@ Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Da
 }
 ```
 
->Response JSON
+>Response JSON im Erfolgsfall
 
 ```json
 {
-  "kaelteEmissionen": 0.0,
-  "waermeEmissionen": 0.0,
-  "stromEmissionen": 0.0,
-  "itGeraeteEmissionen": 0.0,
-  "dienstreisenEmissionen": 0.0,
-  "pendelwegeEmissionen": 0.0
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "kaelteEmissionen": 0.0, 
+    "waermeEmissionen": 0.0, 
+    "stromEmissionen": 0.0, 
+    "itGeraeteEmissionen": 0.0, 
+    "dienstreisenEmissionen": 0.0, 
+    "pendelwegeEmissionen": 0.0 
+},
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
 }
 ```
 
 
 # Adminoberfläche: Eintragen von Daten
 
-URL: example.de/db/*
-
 ## Post neuer CO2-Faktor für Energie
-URL: example.de/db/addFaktor
+URL: `POST */db/addFaktor`
 
 >Request JSON
 
@@ -117,8 +159,33 @@ URL: example.de/db/addFaktor
 }
 ```
 
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": null,
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+
+
 ## Post Zählerdaten
-URL: example.de/db/addZaehlerdaten
+URL: `POST */db/addZaehlerdaten`
 
 >Request JSON
 
@@ -131,8 +198,31 @@ URL: example.de/db/addZaehlerdaten
 }
 ```
 
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": null,
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
 ## Post Zähler hinzufügen
-URL: example.de/db/insertZaehler
+URL: `POST */db/insertZaehler`
 
 >Request JSON
 
@@ -146,8 +236,31 @@ URL: example.de/db/insertZaehler
 }
 ```
 
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": null,
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
 ## Post Gebäude hinzufügen
-URL: example.de/db/insertGebaeude
+URL: `POST */db/insertGebaeude`
 
 >Request JSON
 
@@ -163,6 +276,106 @@ URL: example.de/db/insertGebaeude
     "vf": 0.0,
     "freif": 0.0,
     "gesamtf": 0.0
+  }
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": null,
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+# Authentifizierung
+
+## Post Registrieren und Anmelden
+URL zum Registrieren: `POST */auth/registrierung`
+URL zum Anmelden: `POST */auth/anmeldung` 
+
+>Request JSON
+
+```json
+{
+  "username": "anton@tobi.com", //String, Email des Nutzers
+  "password": "verysecurepassword" //String, Password des Nutzers
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "message": "Der neue Nutzeraccount wurde erstellt",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh"
+},
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 500, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+## Delete Abmelden
+URL: `DELETE */auth/abmeldung`
+
+>Request JSON
+
+```json
+{
+  "username": "anton@tobi.com" //String, Email des Nutzers
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "message": "Der session Token wurde gelöscht"
+},
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 409, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
   }
 }
 ```
