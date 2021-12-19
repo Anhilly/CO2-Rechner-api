@@ -26,10 +26,12 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 
 # Umfrage Mitarbeiter
 
-## POST der Umfrage
-Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Daten für den CO2 Fußabdruck und sendet diese als antwort.
+## POST Umfrage Einfügen
+Hier werden die Daten der Umfrage an den Server gesendet und dort in die Datenbank eingefügt. Als Antwort wird die interne ID der neu erstellten Umfrage zurückgesendet.
 
-URL: `POST */umfrage/mitarbeiter`
+Alte Version berechnet zudem die Daten für den CO2 Fußabdruck und sendet diese als antwort.
+
+URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
 
 >Request JSON
 
@@ -56,12 +58,14 @@ URL: `POST */umfrage/mitarbeiter`
       "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
       "anzahl": 1
     }
-  ]
+  ],
+  "idUmfrage": "123" // umfrage ID als string
 }
 ```
 
 >Response JSON im Erfolgsfall
 
+Alte Version, die auch direkt Ergebnisse zurückliefert:
 ```json
 {
   "status": "success", //String Request erfolgreich
@@ -71,6 +75,51 @@ URL: `POST */umfrage/mitarbeiter`
     "itGeraeteEmissionen": 123456.789 //Float
   },
   "error": null
+}
+```
+
+Neue Version:
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "umfrageID": "123" // umfrage ID als string
+  },
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+## POST Umfrage Existenz Prüfen
+Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Daten für den CO2 Fußabdruck und sendet diese als antwort.
+
+URL: `POST */mitarbeiterUmfrage/exists`
+
+>Request JSON
+
+```json
+{
+  "umfrageID": "123" // umfrage ID als string
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "umfrageID": "123" // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
 }
 ```
 
@@ -91,7 +140,7 @@ URL: `POST */umfrage/mitarbeiter`
 
 ## POST der Umfrage
 
-URL: `POST */umfrage/hauptverantwortlicher`
+URL: `POST */umfrage/insertUmfrage`
 
 >Request JSON
 
@@ -119,6 +168,7 @@ URL: `POST */umfrage/hauptverantwortlicher`
 {
   "status": "success", //String Request erfolgreich
   "data": {
+    "umfrageID": "123" // umfrage ID als string
     "kaelteEmissionen": 0.0, 
     "waermeEmissionen": 0.0, 
     "stromEmissionen": 0.0, 
