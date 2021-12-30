@@ -197,6 +197,45 @@ URL: `POST */umfrage/insertUmfrage`
 }
 ```
 
+## DELETE der Umfrage
+
+URL: `DELETE */umfrage/deleteUmfrage`
+
+>Request JSON 
+
+```json
+{
+	"umfrageID": 61cdb9e6d4ca5003d1ce75dc //String
+	"hauptverantwortlicher": {
+		"username": "anton@tobi" //String
+		"sessiontoken": "545a6scasd8741dfwer" //String
+  }
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": null,
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
 
 # Adminoberfläche: Eintragen von Daten
 
