@@ -158,7 +158,11 @@ URL: `POST */umfrage/insertUmfrage`
       "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
       "anzahl": 5
     }
-  ]
+  ],
+  "hauptverantwortlicher": {
+	"username": "anton@tobi" //String
+	"sessiontoken": "545a6scasd8741dfwer" //String
+  }
 }
 ```
 
