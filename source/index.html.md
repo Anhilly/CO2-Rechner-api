@@ -205,7 +205,7 @@ URL: `DELETE */umfrage/deleteUmfrage`
 
 ```json
 {
-	"umfrageID": 61cdb9e6d4ca5003d1ce75dc //String
+	"umfrageID": "61cdb9e6d4ca5003d1ce75dc" //String
 	"hauptverantwortlicher": {
 		"username": "anton@tobi" //String
 		"sessiontoken": "545a6scasd8741dfwer" //String
