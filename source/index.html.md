@@ -146,6 +146,7 @@ URL: `POST */umfrage/insertUmfrage`
 
 ```json
 {
+  "bezeichnung": "name",
   "gebaeude": [
     {
       "gebaeudeNr": 1201,   //Integer
@@ -172,13 +173,8 @@ URL: `POST */umfrage/insertUmfrage`
 {
   "status": "success", //String Request erfolgreich
   "data": {
-    "umfrageID": "123" // umfrage ID als string
-    "kaelteEmissionen": 0.0, 
-    "waermeEmissionen": 0.0, 
-    "stromEmissionen": 0.0, 
-    "itGeraeteEmissionen": 0.0, 
-    "dienstreisenEmissionen": 0.0, 
-    "pendelwegeEmissionen": 0.0 
+    "umfrageID": "123", // umfrage ID als string
+    "bezeichnung": "",
 },
   "error": null
 }
@@ -456,6 +452,47 @@ URL: `DELETE */auth/abmeldung`
   "status": "success", //String Request erfolgreich
   "data": {
     "message": "Der session Token wurde gelöscht"
+},
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 409, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+# Auswertung
+## GET Asuwertung
+URL: `GET */auswertung?id=`
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "id": "76525192659",
+    "bezeichnung": "",
+    "mitarbeiteranzahl": 0,
+    "jahr": 0,
+    "umfragenanzahl": 0,
+
+    "emissionenWaerme": 0.0,
+    "emissionenStrom": 0.0,
+    "emissionenKaelte": 0.0,
+    "emissionenITGeraeteHauptverantwortlicher": 0.0,
+    "emissionenITGeraeteMitarbeiter": 0.0,
+    "emissionenDienstreisen": 0.0,
+    "emissionenPendelwege": 0.0,
 },
   "error": null
 }
