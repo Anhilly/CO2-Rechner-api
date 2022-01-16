@@ -65,7 +65,7 @@ Anfragen an `*/umfrage`
 
 Die folgenden Endpunkte sind unter `*/auswertung`  
 
-## GET Asuwertung
+## Auswertung für Umfrage erstellen
 URL: `GET */auswertung?id=`
 
 >Response JSON im Erfolgsfall
@@ -110,16 +110,14 @@ URL: `GET */auswertung?id=`
 
 Die folgenden Endpunkte sind unter `*/auth`  
 
-## Post Registrieren und Anmelden
-URL zum Registrieren: `POST */auth/registrierung`
-
-URL zum Anmelden: `POST */auth/anmeldung` 
+## Anmeldung
+URL: `POST */auth/anmeldung` 
 
 >Request JSON
 
 ```json
 {
-  "username": "anton@tobi.com", //String, Email des Nutzers
+  "username": "anton@tobi.com", //String, Nutzername des Nutzers
   "password": "verysecurepassword" //String, Password des Nutzers
 }
 ```
@@ -150,7 +148,51 @@ URL zum Anmelden: `POST */auth/anmeldung`
 }
 ```
 
-## Delete Abmelden
+## Regestrierung
+URL: `POST */auth/registrierung`
+
+>Request JSON
+
+```json
+{
+  "username": "anton@tobi.com", //String, Nutzername des Nutzers
+  "password": "verysecurepassword" //String, Password des Nutzers
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "message": "Der neue Nutzeraccount wurde erstellt",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh"
+},
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 500, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+## Prüfung der Nutzersession
+URL: `POST */auth/pruefeSession`  
+
+## Prüfung der Nutzerrolle
+URL: `POST */auth/pruefeNutzerRolle`
+
+## Abmeldung
 URL: `DELETE */auth/abmeldung`
 
 >Request JSON
@@ -187,11 +229,11 @@ URL: `DELETE */auth/abmeldung`
 ```
 
 
-# Adminoberfläche: Eintragen von Daten
+# Eintragen von neuen Daten (Admin-Feature)
 
 Die folgenden Endpunkte sind unter `*/db`  
 
-## Post neuer CO2-Faktor für Energie
+## Neuer CO2-Faktor für Energieart
 URL: `POST */db/addFaktor`
 
 >Request JSON
@@ -228,7 +270,7 @@ URL: `POST */db/addFaktor`
 ```
 
 
-## Post Zählerdaten
+## Neuer Zählerstand für vorhanden Zähler
 URL: `POST */db/addZaehlerdaten`
 
 >Request JSON
@@ -265,7 +307,7 @@ URL: `POST */db/addZaehlerdaten`
 }
 ```
 
-## Post Zähler hinzufügen
+## Hinzufüngen eines Zählers
 URL: `POST */db/insertZaehler`
 
 >Request JSON
@@ -303,7 +345,7 @@ URL: `POST */db/insertZaehler`
 }
 ```
 
-## Post Gebäude hinzufügen
+## Hinzufügen eines neuen Gebäudes
 URL: `POST */db/insertGebaeude`
 
 >Request JSON
@@ -352,7 +394,45 @@ URL: `POST */db/insertGebaeude`
 
 Die folgenden Endpunkte sind unter `*/mitarbeiterUmfrage`  
 
-## POST Umfrage Einfügen
+## Existenz einer Umfrage prüfen
+URL: `GET */mitarbeiterUmfrage/exists`
+
+JSON IST NICHT AKTUELL, DA ES EIN GET IST.
+>Request JSON
+
+```json
+{
+  "umfrageID": "123" // umfrage ID als string
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "umfrageID": "123" // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+## Gespeicherte Mitarbeiterumfragen einer Umfrage abfragen
+
+URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
+
+
+## Mitarbeiterumfrage einfügen
 Hier werden die Daten der Umfrage an den Server gesendet und dort in die Datenbank eingefügt. Als Antwort wird die interne ID der neu erstellten Umfrage zurückgesendet.
 
 Alte Version berechnet zudem die Daten für den CO2 Fußabdruck und sendet diese als antwort.
@@ -428,47 +508,34 @@ Neue Version:
 }
 ```
 
-## POST Umfrage Existenz Prüfen
-Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Daten für den CO2 Fußabdruck und sendet diese als antwort.
+## Mitarbeiterumfrage ändern
 
-URL: `POST */mitarbeiterUmfrage/exists`
-
->Request JSON
-
-```json
-{
-  "umfrageID": "123" // umfrage ID als string
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-{
-  "umfrageID": "123" // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
-}
-```
-
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
+URL: `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage` 
 
 
-
-# Umfrage Hauptverantwortlicher
+# Umfrage für Hauptverantwortlicher
 
 Die folgenden Endpunkte sind unter `*/umfrage`  
 
-## POST der Umfrage
+## Alle Gebäude aus Datenbank
+
+URL: `GET */umfrage/gebaeude`   
+
+## Alle Umfragen aus Datenbank
+
+URL: `GET */umfrage/alleUmfragen`     
+
+## Alle Umfragen eines Nutzers
+
+URL: `GET */umfrage/GetAllUmfragenForUser`     
+
+## Bilanzierungsjahr einer Umfrage
+    
+Wird für Mitarbeiterumfragen verwendet, um das Bilanzierungsjahr anzuzeigen.
+
+URL: `GET */umfrage/GetUmfrageYear`  
+
+## Umfrage einfügen
 
 URL: `POST */umfrage/insertUmfrage`
 
@@ -521,9 +588,17 @@ URL: `POST */umfrage/insertUmfrage`
     "message": "Errormessage" //String, Errorspezifische Fehlermeldung
   }
 }
-```
+```  
 
-## DELETE der Umfrage
+## Umfrage ändern
+
+URL: `POST */umfrage/updateUmfrage`     
+
+## Umfrage aus Datenbank
+
+URL: `POST */umfrage/getUmfrage`      
+
+## Umfrage löschen
 
 URL: `DELETE */umfrage/deleteUmfrage`
 
