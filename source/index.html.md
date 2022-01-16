@@ -26,6 +26,8 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 
 # Überblick über API-Endpunkte
 
+Die folgende API-Endpunkte sind aktuell im Backend definiert. Alle Endpunkte werden aus dem Frontend in mindestens einem Fetch Request aufgerufen.
+
 Anfragen an `*/auswertung`  
 * `GET */auswertung/`   
 
