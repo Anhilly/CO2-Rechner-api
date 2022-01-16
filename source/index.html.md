@@ -61,148 +61,12 @@ Anfragen an `*/umfrage`
 * `DELETE */umfrage/deleteUmfrage`     
 
 
-# Umfrage Mitarbeiter
+# Auswertung
 
-## POST Umfrage Einfügen
-Hier werden die Daten der Umfrage an den Server gesendet und dort in die Datenbank eingefügt. Als Antwort wird die interne ID der neu erstellten Umfrage zurückgesendet.
+Die folgenden Endpunkte sind unter `*/auswertung`  
 
-Alte Version berechnet zudem die Daten für den CO2 Fußabdruck und sendet diese als antwort.
-
-URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
-
->Request JSON
-
-```json
-{
-  "pendelweg": [
-    {
-      "strecke": 123,   //Integer, in km
-      "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
-      "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
-    }
-  ],
-  "tageImBuero": 7, //Integer
-  "dienstreise":[
-    {
-      "idDienstreise": 2,  //Integer, korrespondieren mit Index in Datenbank
-      "streckentyp": "Langstrecke",
-      "strecke": 800, //Integer, in km
-      "tankart": ""
-    }
-  ],
-  "itGeraete": [
-    {
-      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-      "anzahl": 1
-    }
-  ],
-  "idUmfrage": "123" // umfrage ID als string
-}
-```
-
->Response JSON im Erfolgsfall
-
-Alte Version, die auch direkt Ergebnisse zurückliefert:
-```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": {
-    "pendelwegeEmissionen": 12.457, //Float 
-    "dienstreisenEmissionen": 42.120, //Float
-    "itGeraeteEmissionen": 123456.789 //Float
-  },
-  "error": null
-}
-```
-
-Neue Version:
-```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": {
-    "umfrageID": "123" // umfrage ID als string
-  },
-  "error": null
-}
-```
-
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
-
-## POST Umfrage Existenz Prüfen
-Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Daten für den CO2 Fußabdruck und sendet diese als antwort.
-
-URL: `POST */mitarbeiterUmfrage/exists`
-
->Request JSON
-
-```json
-{
-  "umfrageID": "123" // umfrage ID als string
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-{
-  "umfrageID": "123" // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
-}
-```
-
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
-
-# Umfrage Hauptverantwortlicher
-
-## POST der Umfrage
-
-URL: `POST */umfrage/insertUmfrage`
-
->Request JSON
-
-```json
-{
-  "bezeichnung": "name",
-  "gebaeude": [
-    {
-      "gebaeudeNr": 1201,   //Integer
-      "flaechenanteil": 35  //Integer
-    }
-  ],
-  "anzahlMitarbeiter": 24,
-  "itGeraete": [
-    {
-      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-      "anzahl": 5
-    }
-  ],
-  "hauptverantwortlicher": {
-	"username": "anton@tobi" //String
-	"sessiontoken": "545a6scasd8741dfwer" //String
-  }
-}
-```
+## GET Asuwertung
+URL: `GET */auswertung?id=`
 
 >Response JSON im Erfolgsfall
 
@@ -210,8 +74,19 @@ URL: `POST */umfrage/insertUmfrage`
 {
   "status": "success", //String Request erfolgreich
   "data": {
-    "umfrageID": "123", // umfrage ID als string
+    "id": "76525192659",
     "bezeichnung": "",
+    "mitarbeiteranzahl": 0,
+    "jahr": 0,
+    "umfragenanzahl": 0,
+
+    "emissionenWaerme": 0.0,
+    "emissionenStrom": 0.0,
+    "emissionenKaelte": 0.0,
+    "emissionenITGeraeteHauptverantwortlicher": 0.0,
+    "emissionenITGeraeteMitarbeiter": 0.0,
+    "emissionenDienstreisen": 0.0,
+    "emissionenPendelwege": 0.0,
 },
   "error": null
 }
@@ -224,25 +99,28 @@ URL: `POST */umfrage/insertUmfrage`
   "status": "error", //String, Request fehlgeschlagen
   "data": null,
   "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
+    "code": 409, //Integer, Fehlercode des Response Headers
     "message": "Errormessage" //String, Errorspezifische Fehlermeldung
   }
 }
 ```
 
-## DELETE der Umfrage
 
-URL: `DELETE */umfrage/deleteUmfrage`
+# Authentifizierung
 
->Request JSON 
+Die folgenden Endpunkte sind unter `*/auth`  
+
+## Post Registrieren und Anmelden
+URL zum Registrieren: `POST */auth/registrierung`
+
+URL zum Anmelden: `POST */auth/anmeldung` 
+
+>Request JSON
 
 ```json
 {
-	"umfrageID": "61cdb9e6d4ca5003d1ce75dc" //String
-	"hauptverantwortlicher": {
-		"username": "anton@tobi" //String
-		"sessiontoken": "545a6scasd8741dfwer" //String
-  }
+  "username": "anton@tobi.com", //String, Email des Nutzers
+  "password": "verysecurepassword" //String, Password des Nutzers
 }
 ```
 
@@ -251,7 +129,10 @@ URL: `DELETE */umfrage/deleteUmfrage`
 ```json
 {
   "status": "success", //String Request erfolgreich
-  "data": null,
+  "data": {
+    "message": "Der neue Nutzeraccount wurde erstellt",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh"
+},
   "error": null
 }
 ```
@@ -263,7 +144,43 @@ URL: `DELETE */umfrage/deleteUmfrage`
   "status": "error", //String, Request fehlgeschlagen
   "data": null,
   "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
+    "code": 500, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+## Delete Abmelden
+URL: `DELETE */auth/abmeldung`
+
+>Request JSON
+
+```json
+{
+  "username": "anton@tobi.com" //String, Email des Nutzers
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "message": "Der session Token wurde gelöscht"
+},
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 409, //Integer, Fehlercode des Response Headers
     "message": "Errormessage" //String, Errorspezifische Fehlermeldung
   }
 }
@@ -271,6 +188,8 @@ URL: `DELETE */umfrage/deleteUmfrage`
 
 
 # Adminoberfläche: Eintragen von Daten
+
+Die folgenden Endpunkte sind unter `*/db`  
 
 ## Post neuer CO2-Faktor für Energie
 URL: `POST */db/addFaktor`
@@ -307,7 +226,6 @@ URL: `POST */db/addFaktor`
   }
 }
 ```
-
 
 
 ## Post Zählerdaten
@@ -429,31 +347,70 @@ URL: `POST */db/insertGebaeude`
 }
 ```
 
-# Authentifizierung
 
-## Post Registrieren und Anmelden
-URL zum Registrieren: `POST */auth/registrierung`
+# Umfrage für Mitarbeiter
 
-URL zum Anmelden: `POST */auth/anmeldung` 
+Die folgenden Endpunkte sind unter `*/mitarbeiterUmfrage`  
+
+## POST Umfrage Einfügen
+Hier werden die Daten der Umfrage an den Server gesendet und dort in die Datenbank eingefügt. Als Antwort wird die interne ID der neu erstellten Umfrage zurückgesendet.
+
+Alte Version berechnet zudem die Daten für den CO2 Fußabdruck und sendet diese als antwort.
+
+URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
 
 >Request JSON
 
 ```json
 {
-  "username": "anton@tobi.com", //String, Email des Nutzers
-  "password": "verysecurepassword" //String, Password des Nutzers
+  "pendelweg": [
+    {
+      "strecke": 123,   //Integer, in km
+      "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
+      "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
+    }
+  ],
+  "tageImBuero": 7, //Integer
+  "dienstreise":[
+    {
+      "idDienstreise": 2,  //Integer, korrespondieren mit Index in Datenbank
+      "streckentyp": "Langstrecke",
+      "strecke": 800, //Integer, in km
+      "tankart": ""
+    }
+  ],
+  "itGeraete": [
+    {
+      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+      "anzahl": 1
+    }
+  ],
+  "idUmfrage": "123" // umfrage ID als string
 }
 ```
 
 >Response JSON im Erfolgsfall
 
+Alte Version, die auch direkt Ergebnisse zurückliefert:
 ```json
 {
   "status": "success", //String Request erfolgreich
   "data": {
-    "message": "Der neue Nutzeraccount wurde erstellt",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh"
-},
+    "pendelwegeEmissionen": 12.457, //Float 
+    "dienstreisenEmissionen": 42.120, //Float
+    "itGeraeteEmissionen": 123456.789 //Float
+  },
+  "error": null
+}
+```
+
+Neue Version:
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": {
+    "umfrageID": "123" // umfrage ID als string
+  },
   "error": null
 }
 ```
@@ -465,20 +422,22 @@ URL zum Anmelden: `POST */auth/anmeldung`
   "status": "error", //String, Request fehlgeschlagen
   "data": null,
   "error": {
-    "code": 500, //Integer, Fehlercode des Response Headers
+    "code": 404, //Integer, Fehlercode des Response Headers
     "message": "Errormessage" //String, Errorspezifische Fehlermeldung
   }
 }
 ```
 
-## Delete Abmelden
-URL: `DELETE */auth/abmeldung`
+## POST Umfrage Existenz Prüfen
+Hier werden die Daten der Umfrage an den Server gesendet, diese berechnet die Daten für den CO2 Fußabdruck und sendet diese als antwort.
+
+URL: `POST */mitarbeiterUmfrage/exists`
 
 >Request JSON
 
 ```json
 {
-  "username": "anton@tobi.com" //String, Email des Nutzers
+  "umfrageID": "123" // umfrage ID als string
 }
 ```
 
@@ -486,11 +445,7 @@ URL: `DELETE */auth/abmeldung`
 
 ```json
 {
-  "status": "success", //String Request erfolgreich
-  "data": {
-    "message": "Der session Token wurde gelöscht"
-},
-  "error": null
+  "umfrageID": "123" // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
 }
 ```
 
@@ -501,15 +456,46 @@ URL: `DELETE */auth/abmeldung`
   "status": "error", //String, Request fehlgeschlagen
   "data": null,
   "error": {
-    "code": 409, //Integer, Fehlercode des Response Headers
+    "code": 404, //Integer, Fehlercode des Response Headers
     "message": "Errormessage" //String, Errorspezifische Fehlermeldung
   }
 }
 ```
 
-# Auswertung
-## GET Asuwertung
-URL: `GET */auswertung?id=`
+
+
+# Umfrage Hauptverantwortlicher
+
+Die folgenden Endpunkte sind unter `*/umfrage`  
+
+## POST der Umfrage
+
+URL: `POST */umfrage/insertUmfrage`
+
+>Request JSON
+
+```json
+{
+  "bezeichnung": "name",
+  "gebaeude": [
+    {
+      "gebaeudeNr": 1201,   //Integer
+      "flaechenanteil": 35  //Integer
+    }
+  ],
+  "anzahlMitarbeiter": 24,
+  "itGeraete": [
+    {
+      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+      "anzahl": 5
+    }
+  ],
+  "hauptverantwortlicher": {
+	"username": "anton@tobi" //String
+	"sessiontoken": "545a6scasd8741dfwer" //String
+  }
+}
+```
 
 >Response JSON im Erfolgsfall
 
@@ -517,19 +503,8 @@ URL: `GET */auswertung?id=`
 {
   "status": "success", //String Request erfolgreich
   "data": {
-    "id": "76525192659",
+    "umfrageID": "123", // umfrage ID als string
     "bezeichnung": "",
-    "mitarbeiteranzahl": 0,
-    "jahr": 0,
-    "umfragenanzahl": 0,
-
-    "emissionenWaerme": 0.0,
-    "emissionenStrom": 0.0,
-    "emissionenKaelte": 0.0,
-    "emissionenITGeraeteHauptverantwortlicher": 0.0,
-    "emissionenITGeraeteMitarbeiter": 0.0,
-    "emissionenDienstreisen": 0.0,
-    "emissionenPendelwege": 0.0,
 },
   "error": null
 }
@@ -542,7 +517,46 @@ URL: `GET */auswertung?id=`
   "status": "error", //String, Request fehlgeschlagen
   "data": null,
   "error": {
-    "code": 409, //Integer, Fehlercode des Response Headers
+    "code": 404, //Integer, Fehlercode des Response Headers
+    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
+  }
+}
+```
+
+## DELETE der Umfrage
+
+URL: `DELETE */umfrage/deleteUmfrage`
+
+>Request JSON 
+
+```json
+{
+	"umfrageID": "61cdb9e6d4ca5003d1ce75dc" //String
+	"hauptverantwortlicher": {
+		"username": "anton@tobi" //String
+		"sessiontoken": "545a6scasd8741dfwer" //String
+  }
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+{
+  "status": "success", //String Request erfolgreich
+  "data": null,
+  "error": null
+}
+```
+
+>Response JSON im Fehlerfall
+
+```json
+{
+  "status": "error", //String, Request fehlgeschlagen
+  "data": null,
+  "error": {
+    "code": 404, //Integer, Fehlercode des Response Headers
     "message": "Errormessage" //String, Errorspezifische Fehlermeldung
   }
 }
