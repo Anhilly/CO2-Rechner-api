@@ -32,8 +32,8 @@ Anfragen an `*/auswertung`
 * `GET */auswertung/`   
 
 Anfragen an `*/auth`  
-* `POST */auth/anmeldung`   
-* `POST */auth/registrierung`   
+* `POST */auth/anmeldung`     
+* `POST */auth/registrierung`     
 * `POST */auth/pruefeSession`   
 * `POST */auth/pruefeNutzerRolle`   
 * `DELETE */auth/abmeldung`   
@@ -47,14 +47,14 @@ Anfragen an `*/db`
 Anfragen an `*/mitarbeiterUmfrage`    
 * `GET */mitarbeiterUmfrage/exists`    
 * `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`    
-* `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`    
+* `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage` (keine Auth)    
 * `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`    
 
 Anfragen an `*/umfrage`    
 * `GET */umfrage/gebaeude`     
 * `GET */umfrage/alleUmfragen`     
 * `GET */umfrage/GetAllUmfragenForUser`     
-* `GET */umfrage/GetUmfrageYear`     
+* `GET */umfrage/GetUmfrageYear` (keine Auth)    
 * `POST */umfrage/insertUmfrage`     
 * `POST */umfrage/updateUmfrage`     
 * `POST */umfrage/getUmfrage`      
