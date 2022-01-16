@@ -26,15 +26,15 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 
 # Überblick über API-Endpunkte
 
-Anfragen an `*/auswertung`
+Anfragen an `*/auswertung` \\
 URL: `GET */auswertung/` 
 
-Anfragen an `*/auth`
-URL: `POST */auth/anmeldung`
-URL: `POST */auth/registrierung`
-URL: `POST */auth/pruefeSession`
-URL: `POST */auth/pruefeNutzerRolle`
-URL: `DELETE */auth/abmeldung`
+Anfragen an `*/auth` \\
+URL: `POST */auth/anmeldung` \\
+URL: `POST */auth/registrierung` \\
+URL: `POST */auth/pruefeSession` \\
+URL: `POST */auth/pruefeNutzerRolle` \\
+URL: `DELETE */auth/abmeldung` \\
 
 Anfragen an `*/db`
 URL: `POST */db/addFaktor`
