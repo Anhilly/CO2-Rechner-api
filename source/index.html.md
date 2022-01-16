@@ -27,36 +27,36 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 # Überblick über API-Endpunkte
 
 Anfragen an `*/auswertung`  
-URL: `GET */auswertung/`   
+* `GET */auswertung/`   
 
 Anfragen an `*/auth`  
-URL: `POST */auth/anmeldung`   
-URL: `POST */auth/registrierung`   
-URL: `POST */auth/pruefeSession`   
-URL: `POST */auth/pruefeNutzerRolle`   
-URL: `DELETE */auth/abmeldung`   
+* `POST */auth/anmeldung`   
+* `POST */auth/registrierung`   
+* `POST */auth/pruefeSession`   
+* `POST */auth/pruefeNutzerRolle`   
+* `DELETE */auth/abmeldung`   
 
 Anfragen an `*/db`   
-URL: `POST */db/addFaktor`   
-URL: `POST */db/addZaehlerdaten`   
-URL: `POST */db/insertZaehler`   
-URL: `POST */db/insertGebaeude`   
+* `POST */db/addFaktor`   
+* `POST */db/addZaehlerdaten`   
+* `POST */db/insertZaehler`   
+* `POST */db/insertGebaeude`   
 
 Anfragen an `*/mitarbeiterUmfrage`    
-URL: `GET */mitarbeiterUmfrage/exists`    
-URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`    
-URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`    
-URL: `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`    
+* `GET */mitarbeiterUmfrage/exists`    
+* `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`    
+* `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`    
+* `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`    
 
 Anfragen an `*/umfrage`    
-URL: `GET */umfrage/gebaeude`     
-URL: `GET */umfrage/alleUmfragen`     
-URL: `GET */umfrage/GetAllUmfragenForUser`     
-URL: `GET */umfrage/GetUmfrageYear`     
-URL: `POST */umfrage/insertUmfrage`     
-URL: `POST */umfrage/updateUmfrage`     
-URL: `POST */umfrage/getUmfrage`      
-URL: `DELETE */umfrage/deleteUmfrage`     
+* `GET */umfrage/gebaeude`     
+* `GET */umfrage/alleUmfragen`     
+* `GET */umfrage/GetAllUmfragenForUser`     
+* `GET */umfrage/GetUmfrageYear`     
+* `POST */umfrage/insertUmfrage`     
+* `POST */umfrage/updateUmfrage`     
+* `POST */umfrage/getUmfrage`      
+* `DELETE */umfrage/deleteUmfrage`     
 
 
 # Umfrage Mitarbeiter
