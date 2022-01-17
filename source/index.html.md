@@ -63,7 +63,7 @@ Anfragen an `*/umfrage`
 # Format der Response
 
 Alle gesendeten Responses folgen dem gleichen Aufbau, welche eine direkte Unterscheidung in Erfolgs- und Fehlerfall erlaubt.
-Im Erfolgsfall ist das status Feld mit dem String "success" belegt und im Data Feld stehen die zurückgemeldeten Daten.
+Im Erfolgsfall ist das status Feld mit dem String "success" belegt und im data Feld stehen die zurückgemeldeten Daten.
 ```json
 {
 	"status": "success", //String Request erfolgreich
@@ -79,7 +79,7 @@ Im Fehlerfall steht im status Feld der String "error" und im error Feld ist ein 
 	"data": null,
 	"error": {
 		"code": 400,
-		"message": "Es konnte die Request verarbeitet werden"
+		"message": "Es konnte die Request nicht verarbeitet werden",
 	}
 }
 ```
@@ -93,10 +93,11 @@ Die folgenden Endpunkte sind unter `*/auswertung`
 ## Auswertung für Umfrage erstellen
 URL: `GET */auswertung?id=`
 
+
 >Response JSON im Erfolgsfall
 
 ```json
-{
+"data": {
     "id": "76525192659",
     "bezeichnung": "",
     "mitarbeiteranzahl": 20,
@@ -133,7 +134,7 @@ URL: `POST */auth/anmeldung`
 
 ```json
 {
-  "username": "anton@tobi.com", //String, Nutzername des Nutzers
+  "username": "testuser", //String, Nutzername des Nutzers
   "password": "verysecurepassword" //String, Password des Nutzers
 }
 ```
@@ -141,20 +142,20 @@ URL: `POST */auth/anmeldung`
 >Response JSON im Erfolgsfall
 
 ```json
-{
-    "message": "Der neue Nutzeraccount wurde erstellt",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh"
+"data": {
+    "message": "Nutzer authentifiziert",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh" //String, Sessiontoken mit TTL
 }
 ```
 
-## Regestrierung
+## Registrierung
 URL: `POST */auth/registrierung`
 
 >Request JSON
 
 ```json
 {
-  "username": "anton@tobi.com", //String, Nutzername des Nutzers
+  "username": "testuser", //String, Nutzername des Nutzers
   "password": "verysecurepassword" //String, Password des Nutzers
 }
 ```
@@ -162,21 +163,49 @@ URL: `POST */auth/registrierung`
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": {
+"data": {
     "message": "Der neue Nutzeraccount wurde erstellt",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh"
-},
-  "error": null
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh" //String, Sessiontoken mit TTL
 }
 ```
 
 ## Prüfung der Nutzersession
 URL: `POST */auth/pruefeSession`  
 
+>Request JSON
+
+```json
+{
+	"username": "testuser", //String, Nutzername des Nutzers
+	"password": "verysecurepassword" //String, Password des Nutzers
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
 ## Prüfung der Nutzerrolle
 URL: `POST */auth/pruefeNutzerRolle`
+
+>Request JSON
+
+```json
+{
+	"username": "testuser", //String, Nutzername des Nutzers
+	"password": "verysecurepassword" //String, Password des Nutzers
+}
+```
+
+>Response JSON
+
+```json
+"data": {
+	"rolle": 0 //Integer, 0 User; 1 Admin
+}
+```
 
 ## Abmeldung
 URL: `DELETE */auth/abmeldung`
@@ -185,19 +214,15 @@ URL: `DELETE */auth/abmeldung`
 
 ```json
 {
-  "username": "anton@tobi.com" //String, Email des Nutzers
+  "username": "testuser" //String, Email des Nutzers
 }
 ```
 
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": {
-    "message": "Der session Token wurde gelöscht"
-},
-  "error": null
+"data": {
+    "message": "Der Session Token wurde gelöscht"
 }
 ```
 
@@ -213,20 +238,20 @@ URL: `POST */db/addFaktor`
 
 ```json
 {
-  "idEnergieversorgung": 1, //Integer
-  "jahr": 2020,             //Integer
-  "wert": 2000              //Integer
+	"authToken": {
+		"username": 	"testuser",
+		"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+	},
+	"idEnergieversorgung": 1, //Integer
+	"jahr": 2020,             //Integer
+	"wert": 2000,             //Integer
 }
 ```
 
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": null,
-  "error": null
-}
+"data": null
 ```
 
 
@@ -237,21 +262,21 @@ URL: `POST */db/addZaehlerdaten`
 
 ```json
 {
-  "pkEnergie": 1,   //Integer
-  "idEnergieversorgung": 1, //Integer
-  "jahr": 2020,     //Integer
-  "wert": 2000.0    //float
+	"authToken": {
+		"username": 	"testuser",
+		"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+	},
+	"pkEnergie": 1,   //Integer
+	"idEnergieversorgung": 1, //Integer
+	"jahr": 2020,     //Integer
+	"wert": 2000.0    //float
 }
 ```
 
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": null,
-  "error": null
-}
+"data": null
 ```
 
 
@@ -262,22 +287,22 @@ URL: `POST */db/insertZaehler`
 
 ```json
 {
-  "pkEnergie": 1,           //Integer
-  "idEnergieversorgung": 1, //Integer
-  "bezeichnung": "",
-  "einheit": "",
-  "gebaeudeRef": []         //Array an Integers
+	"authToken": {
+		"username": 	"testuser",
+		"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+	},
+	"pkEnergie": 1,           //Integer
+	"idEnergieversorgung": 1, //Integer
+	"bezeichnung": "",
+	"einheit": "",
+	"gebaeudeRef": []         //Array an Integers
 }
 ```
 
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": null,
-  "error": null
-}
+"data": null
 ```
 
 
@@ -288,28 +313,28 @@ URL: `POST */db/insertGebaeude`
 
 ```json
 {
-  "nr": 1101,               //Integer
-  "bezeichnung": "",
-  "flaeche": {
-    "hnf": 0.0,
-    "nnf": 0.0,
-    "ngf": 0.0,
-    "ff": 0.0,
-    "vf": 0.0,
-    "freif": 0.0,
-    "gesamtf": 0.0
-  }
+	"authToken": {
+		"username": 	"testuser",
+		"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+	},
+	"nr": 1101,               //Integer
+	"bezeichnung": "",
+	"flaeche": {
+		"hnf": 0.0,		//Float
+		"nnf": 0.0, 	//Float
+		"ngf": 0.0, 	//Float
+		"ff": 0.0,		//Float
+		"vf": 0.0,		//Float
+		"freif": 0.0, 	//Float
+		"gesamtf": 0.0 	//Float
+	}
 }
 ```
 
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": null,
-  "error": null
-}
+"data": null
 ```
 
 
@@ -318,22 +343,20 @@ URL: `POST */db/insertGebaeude`
 Die folgenden Endpunkte sind unter `*/mitarbeiterUmfrage`  
 
 ## Existenz einer Umfrage prüfen
-URL: `GET */mitarbeiterUmfrage/exists`
+URL: `GET */mitarbeiterUmfrage/exists?id=[...]`
 
-JSON IST NICHT AKTUELL, DA ES EIN GET IST.
->Request JSON
+>Übergebene URL Parameter
 
-```json
-{
-  "umfrageID": "123" // umfrage ID als string
-}
-```
+* "id": "asd3as712d4as5d6d" // Umfrage ID als string
+
 
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "umfrageID": "123" // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
+"data": {
+	"umfrageID": "123", // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
+	"bezeichnung": "Umfragename",
+	"complete":  true //bool,
 }
 ```
 
@@ -343,10 +366,45 @@ JSON IST NICHT AKTUELL, DA ES EIN GET IST.
 URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
 
 
+>Response JSON im Erfolgsfall
+
+```json
+"data": {
+	"mitarbeiterUmfragen": [
+		{
+			"_id": "wefg3872ehadsij1asd1t",
+			"pendelweg": [
+				{	
+					"idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
+					"strecke": 123,   //Integer, in km
+					"personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
+				}
+			],
+			"tageImBuero": 7, //Integer
+			"dienstreise":[
+				{
+					"idDienstreise": 2,  //Integer, korrespondieren mit Index in Datenbank
+					"streckentyp": "Langstrecke",
+					"strecke": 800, //Integer, in km
+					"tankart": ""
+				}
+			],
+			"itGeraete": [
+				{
+					"idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+					"anzahl": 1
+				}
+			],
+			"idUmfrage": "123", // umfrage ID als string
+			"revision": 1 //Integer
+		},
+	]
+}
+```
+
 ## Mitarbeiterumfrage einfügen
 Hier werden die Daten der Umfrage an den Server gesendet und dort in die Datenbank eingefügt. Als Antwort wird die interne ID der neu erstellten Umfrage zurückgesendet.
 
-Alte Version berechnet zudem die Daten für den CO2 Fußabdruck und sendet diese als antwort.
 
 URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
 
@@ -356,9 +414,9 @@ URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
 {
   "pendelweg": [
     {
-      "strecke": 123,   //Integer, in km
-      "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
-      "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
+		"idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
+		"strecke": 123,   //Integer, in km
+		"personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
     }
   ],
   "tageImBuero": 7, //Integer
@@ -382,34 +440,62 @@ URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
 
 >Response JSON im Erfolgsfall
 
-Alte Version, die auch direkt Ergebnisse zurückliefert:
-```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": {
-    "pendelwegeEmissionen": 12.457, //Float 
-    "dienstreisenEmissionen": 42.120, //Float
-    "itGeraeteEmissionen": 123456.789 //Float
-  },
-  "error": null
-}
-```
 
-Neue Version:
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": {
-    "umfrageID": "123" // umfrage ID als string
-  },
-  "error": null
-}
+"data": null
 ```
 
 
 ## Mitarbeiterumfrage ändern
 
+Admin only
+
 URL: `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage` 
+
+>Request JSON
+
+```json
+{
+  "authToken": {
+	"username": 	"testuser",
+	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+  "pendelweg": [
+    {
+		"idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
+		"strecke": 123,   //Integer, in km
+		"personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
+    }
+  ],
+  "tageImBuero": 7, //Integer
+  "dienstreise":[
+    {
+      "idDienstreise": 2,  //Integer, korrespondieren mit Index in Datenbank
+      "streckentyp": "Langstrecke",
+      "strecke": 800, //Integer, in km
+      "tankart": ""
+    }
+  ],
+  "itGeraete": [
+    {
+      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+      "anzahl": 1
+    }
+  ],
+  "idUmfrage": "123" // umfrage ID als string
+}
+```
+
+>Response JSON
+
+TODO: hier sollte null ausreichen.
+
+```json
+"data": {
+	"umfrageID": "dfklj239fhab9d1320f",
+	"bezeichnung": "Umfragename"
+}
+```
 
 
 # Umfrage für Hauptverantwortlicher
@@ -420,19 +506,107 @@ Die folgenden Endpunkte sind unter `*/umfrage`
 
 URL: `GET */umfrage/gebaeude`   
 
+>Übergebene URL Parameter
+
+Keine
+
+
+>Response JSON
+
+```json
+"data": {
+	"gebaeude": [ 1101, 3012 ] //Integerarray
+}
+```
+
 ## Alle Umfragen aus Datenbank
 
 URL: `GET */umfrage/alleUmfragen`     
+
+Admin only
+
+TODO Authentication als POST
+
+>Response JSON
+
+```json
+"data": {
+	"umfragen": [ 
+		{	
+			"_id": "aidhb731dh9dh13jd",
+			"bezeichnung": "umfragename",
+			"mitarbeiteranzahl": 24, //Integer
+			"jahr": 2020, //Integer
+			"gebaeude": [
+				{
+					"gebaeudeNr": 1201,   //Integer
+					"nutzflaeche": 35  //Integer
+				}
+			],
+			"itGeraete": [
+				{
+					"idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+					"anzahl": 5
+				}
+			],
+			"revision": 1, //Integer
+			"mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+		}
+	]
+}
+```
+
 
 ## Alle Umfragen eines Nutzers
 
 URL: `GET */umfrage/GetAllUmfragenForUser`     
 
+TODO Authentication als POST
+
+>Response JSON
+
+```json
+"data": {
+	"umfragen": [ 
+		{	
+			"_id": "aidhb731dh9dh13jd",
+			"bezeichnung": "umfragename",
+			"mitarbeiteranzahl": 24, //Integer
+			"jahr": 2020, //Integer
+			"gebaeude": [
+				{
+					"gebaeudeNr": 1201,   //Integer
+					"nutzflaeche": 35  //Integer
+				}
+			],
+			"itGeraete": [
+				{
+					"idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+					"anzahl": 5
+				}
+			],
+			"revision": 1, //Integer
+			"mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+		}
+	]
+}
+```
+
 ## Bilanzierungsjahr einer Umfrage
     
 Wird für Mitarbeiterumfragen verwendet, um das Bilanzierungsjahr anzuzeigen.
 
-URL: `GET */umfrage/GetUmfrageYear`  
+URL: `GET */umfrage/GetUmfrageYear?id=[...]`  
+
+>Übergebene URL Parameter
+
+* "id": "asd3as712d4as5d6d" // Umfrage ID als string
+
+>Response JSON
+
+```json
+"data": 2020 //Integer
+```
 
 ## Umfrage einfügen
 
@@ -442,23 +616,24 @@ URL: `POST */umfrage/insertUmfrage`
 
 ```json
 {
-  "bezeichnung": "name",
+  "bezeichnung": "Umfragename",
+  "mitarbeiteranzahl": 24, //Integer
+  "jahr": 2020, //Integer
   "gebaeude": [
     {
       "gebaeudeNr": 1201,   //Integer
-      "flaechenanteil": 35  //Integer
+      "nutzflaeche": 35  //Integer
     }
   ],
-  "anzahlMitarbeiter": 24,
   "itGeraete": [
     {
       "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
       "anzahl": 5
     }
   ],
-  "hauptverantwortlicher": {
-	"username": "anton@tobi" //String
-	"sessiontoken": "545a6scasd8741dfwer" //String
+  "authToken": {
+	"username": "testuser",
+	"sessiontoken": "545a6scasd8741dfwer"
   }
 }
 ```
@@ -466,13 +641,9 @@ URL: `POST */umfrage/insertUmfrage`
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": {
-    "umfrageID": "123", // umfrage ID als string
-    "bezeichnung": "",
-},
-  "error": null
+"data": {
+	"umfrageID": "asfn393f130cd1", // umfrage ID als string
+	"bezeichnung": "Umfragename",
 }
 ```
 
@@ -481,9 +652,85 @@ URL: `POST */umfrage/insertUmfrage`
 
 URL: `POST */umfrage/updateUmfrage`     
 
+>Request JSON
+
+```json
+{
+	"authToken": {
+		"username": "testuser",
+		"sessiontoken": "545a6scasd8741dfwer"
+	},
+	"umfrageID": "981jf9012fnc10ad1", // umfrage ID als String
+	"bezeichnung": "Umfragename",
+	"mitarbeiteranzahl": 12, //Integer
+	"jahr": 2020, //Integer
+	"gebaeude": [
+		{
+			"gebaeudeNr": 1101, //Integer korrespondiert mit ID
+			"nutzflaeche": 12  //Integer
+		}
+	],
+	"itGeraete": [
+		{
+			"idITGeraete": 2, //Integer korrespondiert mit ID
+			"anzahl": 12 //Integer
+		}
+	],
+	"revision": 1 //Integer
+}
+```
+
+>Response JSON
+
+TODO kann vermutlich auch null sein, hängt von Adminpanel ab
+
+```json
+"data": {
+	"umfrageID": "981jf9012fnc10ad1",
+	"bezeichnung": "Umfragename"
+}
+```
+
 ## Umfrage aus Datenbank
 
 URL: `POST */umfrage/getUmfrage`      
+
+>Request JSON
+
+```json
+{
+	"umfrageID": "aidhb731dh9dh13jd",
+	"authToken": {
+		"username": "testuser",
+		"sessiontoken": "545a6scasd8741dfwer"
+	}
+}
+```
+
+>Response JSON
+
+```json
+"data": {
+	"_id": "aidhb731dh9dh13jd",
+	"bezeichnung": "umfragename",
+	"mitarbeiteranzahl": 24, //Integer
+	"jahr": 2020, //Integer
+	"gebaeude": [
+		{
+			"gebaeudeNr": 1201,   //Integer
+			"nutzflaeche": 35  //Integer
+		}
+	],
+	"itGeraete": [
+		{
+			"idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+			"anzahl": 5
+		}
+	],
+	"revision": 1, //Integer
+	"mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+}
+```
 
 ## Umfrage löschen
 
@@ -493,10 +740,10 @@ URL: `DELETE */umfrage/deleteUmfrage`
 
 ```json
 {
-	"umfrageID": "61cdb9e6d4ca5003d1ce75dc" //String
-	"hauptverantwortlicher": {
-		"username": "anton@tobi" //String
-		"sessiontoken": "545a6scasd8741dfwer" //String
+	"umfrageID": "61cdb9e6d4ca5003d1ce75dc"
+	"authToken": {
+		"username": "testuser"
+		"sessiontoken": "545a6scasd8741dfwer"
   }
 }
 ```
@@ -504,9 +751,5 @@ URL: `DELETE */umfrage/deleteUmfrage`
 >Response JSON im Erfolgsfall
 
 ```json
-{
-  "status": "success", //String Request erfolgreich
-  "data": null,
-  "error": null
-}
+"data": null
 ```
