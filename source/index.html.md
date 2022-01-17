@@ -66,21 +66,21 @@ Alle gesendeten Responses folgen dem gleichen Aufbau, welche eine direkte Unters
 Im Erfolgsfall ist das status Feld mit dem String "success" belegt und im data Feld stehen die zurückgemeldeten Daten.
 ```json
 {
-	"status": "success", //String Request erfolgreich
-	"data": {...},
-	"error": null,
+  "status": "success", //String Request erfolgreich
+  "data": {...},
+  "error": null,
 }
 ```
 
 Im Fehlerfall steht im status Feld der String "error" und im error Feld ist ein festes JSON Format mit Fehlermeldung und -code festgeschrieben.
 ```json
 {
-	"status": "error", //String Request fehlgeschlagen
-	"data": null,
-	"error": {
-		"code": 400,
-		"message": "Es konnte die Request nicht verarbeitet werden",
-	}
+  "status": "error", //String Request fehlgeschlagen
+  "data": null,
+  "error": {
+ 	"code": 400,
+	"message": "Es konnte die Request nicht verarbeitet werden",
+  }
 }
 ```
 
@@ -103,22 +103,22 @@ URL: `GET */auswertung?id=`
     "mitarbeiteranzahl": 20,
     "jahr": 0,
     "umfragenanzahl": 10,
-	"umfrageanteil": 0.5,
+    "umfrageanteil": 0.5,
 
     "emissionenWaerme": 0.0,
     "emissionenStrom": 0.0,
     "emissionenKaelte": 0.0,
-	"emissionenEnergie": 0.0,
+    "emissionenEnergie": 0.0,
     "emissionenITGeraeteHauptverantwortlicher": 0.0,
     "emissionenITGeraeteMitarbeiter": 0.0,
-	"emissionenITGeraete": 0.0,
+    "emissionenITGeraete": 0.0,
     "emissionenDienstreisen": 0.0,
     "emissionenPendelwege": 0.0,
-	"emissionenGesamt": 0.0,
-	"emissionenProMitarbeiter": 0.0,
+    "emissionenGesamt": 0.0,
+    "emissionenProMitarbeiter": 0.0,
 	
-	"vergleich2PersonenHaushalt": 0.0,
-	"vergleich4PersonenHaushalt": 0,0,
+    "vergleich2PersonenHaushalt": 0.0,
+    "vergleich4PersonenHaushalt": 0,0,
 }
 ```
 
@@ -176,8 +176,8 @@ URL: `POST */auth/pruefeSession`
 
 ```json
 {
-	"username": "testuser", //String, Nutzername des Nutzers
-	"password": "verysecurepassword" //String, Password des Nutzers
+  "username": "testuser", //String, Nutzername des Nutzers
+  "password": "verysecurepassword" //String, Password des Nutzers
 }
 ```
 
@@ -194,8 +194,8 @@ URL: `POST */auth/pruefeNutzerRolle`
 
 ```json
 {
-	"username": "testuser", //String, Nutzername des Nutzers
-	"password": "verysecurepassword" //String, Password des Nutzers
+  "username": "testuser", //String, Nutzername des Nutzers
+  "password": "verysecurepassword" //String, Password des Nutzers
 }
 ```
 
@@ -203,7 +203,7 @@ URL: `POST */auth/pruefeNutzerRolle`
 
 ```json
 "data": {
-	"rolle": 0 //Integer, 0 User; 1 Admin
+  "rolle": 0 //Integer, 0 User; 1 Admin
 }
 ```
 
@@ -222,7 +222,7 @@ URL: `DELETE */auth/abmeldung`
 
 ```json
 "data": {
-    "message": "Der Session Token wurde gelöscht"
+  "message": "Der Session Token wurde gelöscht"
 }
 ```
 
@@ -238,13 +238,13 @@ URL: `POST */db/addFaktor`
 
 ```json
 {
-	"authToken": {
-		"username": 	"testuser",
-		"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-	},
-	"idEnergieversorgung": 1, //Integer
-	"jahr": 2020,             //Integer
-	"wert": 2000,             //Integer
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+    "idEnergieversorgung": 1, //Integer
+    "jahr": 2020,             //Integer
+    "wert": 2000,             //Integer
 }
 ```
 
@@ -262,14 +262,14 @@ URL: `POST */db/addZaehlerdaten`
 
 ```json
 {
-	"authToken": {
-		"username": 	"testuser",
-		"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-	},
-	"pkEnergie": 1,   //Integer
-	"idEnergieversorgung": 1, //Integer
-	"jahr": 2020,     //Integer
-	"wert": 2000.0    //float
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+  "pkEnergie": 1,   //Integer
+  "idEnergieversorgung": 1, //Integer
+  "jahr": 2020,     //Integer
+  "wert": 2000.0    //float
 }
 ```
 
@@ -287,15 +287,15 @@ URL: `POST */db/insertZaehler`
 
 ```json
 {
-	"authToken": {
-		"username": 	"testuser",
-		"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-	},
-	"pkEnergie": 1,           //Integer
-	"idEnergieversorgung": 1, //Integer
-	"bezeichnung": "",
-	"einheit": "",
-	"gebaeudeRef": []         //Array an Integers
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+  "pkEnergie": 1,           //Integer
+  "idEnergieversorgung": 1, //Integer
+  "bezeichnung": "",
+  "einheit": "",
+  "gebaeudeRef": []         //Array an Integers
 }
 ```
 
@@ -313,21 +313,21 @@ URL: `POST */db/insertGebaeude`
 
 ```json
 {
-	"authToken": {
-		"username": 	"testuser",
-		"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-	},
-	"nr": 1101,               //Integer
-	"bezeichnung": "",
-	"flaeche": {
-		"hnf": 0.0,		//Float
-		"nnf": 0.0, 	//Float
-		"ngf": 0.0, 	//Float
-		"ff": 0.0,		//Float
-		"vf": 0.0,		//Float
-		"freif": 0.0, 	//Float
-		"gesamtf": 0.0 	//Float
-	}
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+  "nr": 1101,       //Integer
+  "bezeichnung": "",
+  "flaeche": {
+    "hnf": 0.0,		//Float
+    "nnf": 0.0, 	//Float
+    "ngf": 0.0, 	//Float
+    "ff": 0.0,		//Float
+    "vf": 0.0,		//Float
+    "freif": 0.0, 	//Float
+    "gesamtf": 0.0 	//Float
+  }
 }
 ```
 
@@ -354,9 +354,9 @@ URL: `GET */mitarbeiterUmfrage/exists?id=[...]`
 
 ```json
 "data": {
-	"umfrageID": "123", // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
-	"bezeichnung": "Umfragename",
-	"complete":  true //bool,
+  "umfrageID": "123", // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
+  "bezeichnung": "Umfragename",
+  "complete":  true //bool,
 }
 ```
 
@@ -370,35 +370,35 @@ URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
 
 ```json
 "data": {
-	"mitarbeiterUmfragen": [
-		{
-			"_id": "wefg3872ehadsij1asd1t",
-			"pendelweg": [
-				{	
-					"idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
-					"strecke": 123,   //Integer, in km
-					"personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
-				}
-			],
-			"tageImBuero": 7, //Integer
-			"dienstreise":[
-				{
-					"idDienstreise": 2,  //Integer, korrespondieren mit Index in Datenbank
-					"streckentyp": "Langstrecke",
-					"strecke": 800, //Integer, in km
-					"tankart": ""
-				}
-			],
-			"itGeraete": [
-				{
-					"idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-					"anzahl": 1
-				}
-			],
-			"idUmfrage": "123", // umfrage ID als string
-			"revision": 1 //Integer
-		},
-	]
+  "mitarbeiterUmfragen": [
+    {
+      "_id": "wefg3872ehadsij1asd1t",
+      "pendelweg": [
+        {	
+          "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
+          "strecke": 123,   //Integer, in km
+          "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
+        }
+      ],
+      "tageImBuero": 7, //Integer
+      "dienstreise":[
+        {
+          "idDienstreise": 2,  //Integer, korrespondieren mit Index in Datenbank
+          "streckentyp": "Langstrecke",
+          "strecke": 800, //Integer, in km
+          "tankart": ""
+        }
+      ],
+      "itGeraete": [
+        {
+          "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+          "anzahl": 1
+        }
+      ],
+      "idUmfrage": "123", // umfrage ID als string
+      "revision": 1 //Integer
+    },
+  ]
 }
 ```
 
@@ -414,9 +414,9 @@ URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
 {
   "pendelweg": [
     {
-		"idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
-		"strecke": 123,   //Integer, in km
-		"personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
+      "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
+      "strecke": 123,   //Integer, in km
+      "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
     }
   ],
   "tageImBuero": 7, //Integer
@@ -462,9 +462,9 @@ URL: `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`
   },
   "pendelweg": [
     {
-		"idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
-		"strecke": 123,   //Integer, in km
-		"personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
+      "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
+      "strecke": 123,   //Integer, in km
+      "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
     }
   ],
   "tageImBuero": 7, //Integer
@@ -492,8 +492,8 @@ TODO: hier sollte null ausreichen.
 
 ```json
 "data": {
-	"umfrageID": "dfklj239fhab9d1320f",
-	"bezeichnung": "Umfragename"
+  "umfrageID": "dfklj239fhab9d1320f",
+  "bezeichnung": "Umfragename"
 }
 ```
 
@@ -515,7 +515,7 @@ Keine
 
 ```json
 "data": {
-	"gebaeude": [ 1101, 3012 ] //Integerarray
+  "gebaeude": [ 1101, 3012 ] //Integerarray
 }
 ```
 
@@ -531,28 +531,28 @@ TODO Authentication als POST
 
 ```json
 "data": {
-	"umfragen": [ 
-		{	
-			"_id": "aidhb731dh9dh13jd",
-			"bezeichnung": "umfragename",
-			"mitarbeiteranzahl": 24, //Integer
-			"jahr": 2020, //Integer
-			"gebaeude": [
-				{
-					"gebaeudeNr": 1201,   //Integer
-					"nutzflaeche": 35  //Integer
-				}
-			],
-			"itGeraete": [
-				{
-					"idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-					"anzahl": 5
-				}
-			],
-			"revision": 1, //Integer
-			"mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
-		}
-	]
+  "umfragen": [ 
+    {	
+      "_id": "aidhb731dh9dh13jd",
+      "bezeichnung": "umfragename",
+      "mitarbeiteranzahl": 24, //Integer
+      "jahr": 2020, //Integer
+      "gebaeude": [
+        {
+          "gebaeudeNr": 1201,   //Integer
+          "nutzflaeche": 35  //Integer
+        }
+      ],
+      "itGeraete": [
+        {
+          "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+          "anzahl": 5
+        }
+      ],
+      "revision": 1, //Integer
+      "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+    }
+  ]
 }
 ```
 
@@ -567,28 +567,28 @@ TODO Authentication als POST
 
 ```json
 "data": {
-	"umfragen": [ 
-		{	
-			"_id": "aidhb731dh9dh13jd",
-			"bezeichnung": "umfragename",
-			"mitarbeiteranzahl": 24, //Integer
-			"jahr": 2020, //Integer
-			"gebaeude": [
-				{
-					"gebaeudeNr": 1201,   //Integer
-					"nutzflaeche": 35  //Integer
-				}
-			],
-			"itGeraete": [
-				{
-					"idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-					"anzahl": 5
-				}
-			],
-			"revision": 1, //Integer
-			"mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+  "umfragen": [ 
+    {
+      "_id": "aidhb731dh9dh13jd",
+      "bezeichnung": "umfragename",
+      "mitarbeiteranzahl": 24, //Integer
+      "jahr": 2020, //Integer
+      "gebaeude": [
+        {
+		  "gebaeudeNr": 1201,   //Integer
+		  "nutzflaeche": 35  //Integer
 		}
-	]
+	  ],
+	  "itGeraete": [
+	    {
+          "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+		  "anzahl": 5
+		}
+	  ],
+	  "revision": 1, //Integer
+	  "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+	}
+  ]
 }
 ```
 
@@ -632,8 +632,8 @@ URL: `POST */umfrage/insertUmfrage`
     }
   ],
   "authToken": {
-	"username": "testuser",
-	"sessiontoken": "545a6scasd8741dfwer"
+    "username": "testuser",
+    "sessiontoken": "545a6scasd8741dfwer"
   }
 }
 ```
@@ -642,8 +642,8 @@ URL: `POST */umfrage/insertUmfrage`
 
 ```json
 "data": {
-	"umfrageID": "asfn393f130cd1", // umfrage ID als string
-	"bezeichnung": "Umfragename",
+  "umfrageID": "asfn393f130cd1", // umfrage ID als string
+  "bezeichnung": "Umfragename",
 }
 ```
 
@@ -656,27 +656,27 @@ URL: `POST */umfrage/updateUmfrage`
 
 ```json
 {
-	"authToken": {
-		"username": "testuser",
-		"sessiontoken": "545a6scasd8741dfwer"
-	},
-	"umfrageID": "981jf9012fnc10ad1", // umfrage ID als String
-	"bezeichnung": "Umfragename",
-	"mitarbeiteranzahl": 12, //Integer
-	"jahr": 2020, //Integer
-	"gebaeude": [
-		{
-			"gebaeudeNr": 1101, //Integer korrespondiert mit ID
-			"nutzflaeche": 12  //Integer
-		}
-	],
-	"itGeraete": [
-		{
-			"idITGeraete": 2, //Integer korrespondiert mit ID
-			"anzahl": 12 //Integer
-		}
-	],
-	"revision": 1 //Integer
+  "authToken": {
+    "username": "testuser",
+    "sessiontoken": "545a6scasd8741dfwer"
+  },
+  "umfrageID": "981jf9012fnc10ad1", // umfrage ID als String
+  "bezeichnung": "Umfragename",
+  "mitarbeiteranzahl": 12, //Integer
+  "jahr": 2020, //Integer
+  "gebaeude": [
+    {
+      "gebaeudeNr": 1101, //Integer korrespondiert mit ID
+      "nutzflaeche": 12  //Integer
+    }
+  ],
+  "itGeraete": [
+    {
+      "idITGeraete": 2, //Integer korrespondiert mit ID
+      "anzahl": 12 //Integer
+    }
+  ],
+  "revision": 1 //Integer
 }
 ```
 
@@ -686,8 +686,8 @@ TODO kann vermutlich auch null sein, hängt von Adminpanel ab
 
 ```json
 "data": {
-	"umfrageID": "981jf9012fnc10ad1",
-	"bezeichnung": "Umfragename"
+  "umfrageID": "981jf9012fnc10ad1",
+  "bezeichnung": "Umfragename"
 }
 ```
 
@@ -699,11 +699,11 @@ URL: `POST */umfrage/getUmfrage`
 
 ```json
 {
-	"umfrageID": "aidhb731dh9dh13jd",
-	"authToken": {
-		"username": "testuser",
-		"sessiontoken": "545a6scasd8741dfwer"
-	}
+  "umfrageID": "aidhb731dh9dh13jd",
+  "authToken": {
+    "username": "testuser",
+    "sessiontoken": "545a6scasd8741dfwer"
+  }
 }
 ```
 
@@ -711,24 +711,24 @@ URL: `POST */umfrage/getUmfrage`
 
 ```json
 "data": {
-	"_id": "aidhb731dh9dh13jd",
-	"bezeichnung": "umfragename",
-	"mitarbeiteranzahl": 24, //Integer
-	"jahr": 2020, //Integer
-	"gebaeude": [
-		{
-			"gebaeudeNr": 1201,   //Integer
-			"nutzflaeche": 35  //Integer
-		}
-	],
-	"itGeraete": [
-		{
-			"idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-			"anzahl": 5
-		}
-	],
-	"revision": 1, //Integer
-	"mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+  "_id": "aidhb731dh9dh13jd",
+  "bezeichnung": "umfragename",
+  "mitarbeiteranzahl": 24, //Integer
+  "jahr": 2020, //Integer
+  "gebaeude": [
+    {
+      "gebaeudeNr": 1201,   //Integer
+      "nutzflaeche": 35  //Integer
+    }
+  ],
+  "itGeraete": [
+    {
+      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+      "anzahl": 5
+    }
+  ],
+  "revision": 1, //Integer
+  "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
 }
 ```
 
@@ -740,10 +740,10 @@ URL: `DELETE */umfrage/deleteUmfrage`
 
 ```json
 {
-	"umfrageID": "61cdb9e6d4ca5003d1ce75dc"
-	"authToken": {
-		"username": "testuser"
-		"sessiontoken": "545a6scasd8741dfwer"
+  "umfrageID": "61cdb9e6d4ca5003d1ce75dc"
+  "authToken": {
+    "username": "testuser"
+    "sessiontoken": "545a6scasd8741dfwer"
   }
 }
 ```
