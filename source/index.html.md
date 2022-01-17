@@ -45,7 +45,7 @@ Anfragen an `*/db`
 * `POST */db/insertGebaeude`   
 
 Anfragen an `*/mitarbeiterUmfrage`    
-* `GET */mitarbeiterUmfrage/exists`    
+* `GET */mitarbeiterUmfrage/exists`  (kein Auth)    
 * `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`    
 * `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage` (keine Auth)    
 * `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`    
@@ -60,6 +60,31 @@ Anfragen an `*/umfrage`
 * `POST */umfrage/getUmfrage`      
 * `DELETE */umfrage/deleteUmfrage`     
 
+# Format der Response
+
+Alle gesendeten Responses folgen dem gleichen Aufbau, welche eine direkte Unterscheidung in Erfolgs- und Fehlerfall erlaubt.
+Im Erfolgsfall ist das status Feld mit dem String "success" belegt und im Data Feld stehen die zurückgemeldeten Daten.
+```json
+{
+	"status": "success", //String Request erfolgreich
+	"data": {...},
+	"error": null,
+}
+```
+
+Im Fehlerfall steht im status Feld der String "error" und im error Feld ist ein festes JSON Format mit Fehlermeldung und -code festgeschrieben.
+```json
+{
+	"status": "error", //String Request fehlgeschlagen
+	"data": null,
+	"error": {
+		"code": 400,
+		"message": "Es konnte die Request verarbeitet werden"
+	}
+}
+```
+
+Im Nachfolgenden werden wir immer nur die data Felder auflisten.
 
 # Auswertung
 
@@ -72,36 +97,27 @@ URL: `GET */auswertung?id=`
 
 ```json
 {
-  "status": "success", //String Request erfolgreich
-  "data": {
     "id": "76525192659",
     "bezeichnung": "",
-    "mitarbeiteranzahl": 0,
+    "mitarbeiteranzahl": 20,
     "jahr": 0,
-    "umfragenanzahl": 0,
+    "umfragenanzahl": 10,
+	"umfrageanteil": 0.5,
 
     "emissionenWaerme": 0.0,
     "emissionenStrom": 0.0,
     "emissionenKaelte": 0.0,
+	"emissionenEnergie": 0.0,
     "emissionenITGeraeteHauptverantwortlicher": 0.0,
     "emissionenITGeraeteMitarbeiter": 0.0,
+	"emissionenITGeraete": 0.0,
     "emissionenDienstreisen": 0.0,
     "emissionenPendelwege": 0.0,
-},
-  "error": null
-}
-```
-
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 409, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
+	"emissionenGesamt": 0.0,
+	"emissionenProMitarbeiter": 0.0,
+	
+	"vergleich2PersonenHaushalt": 0.0,
+	"vergleich4PersonenHaushalt": 0,0,
 }
 ```
 
@@ -126,25 +142,8 @@ URL: `POST */auth/anmeldung`
 
 ```json
 {
-  "status": "success", //String Request erfolgreich
-  "data": {
     "message": "Der neue Nutzeraccount wurde erstellt",
     "sessiontoken": "efjuhgsdfjh19u34z287rsdjh"
-},
-  "error": null
-}
-```
-
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 500, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
 }
 ```
 
@@ -170,19 +169,6 @@ URL: `POST */auth/registrierung`
     "sessiontoken": "efjuhgsdfjh19u34z287rsdjh"
 },
   "error": null
-}
-```
-
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 500, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
 }
 ```
 
@@ -215,19 +201,6 @@ URL: `DELETE */auth/abmeldung`
 }
 ```
 
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 409, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
-
 
 # Eintragen von neuen Daten (Admin-Feature)
 
@@ -256,19 +229,6 @@ URL: `POST */db/addFaktor`
 }
 ```
 
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
-
 
 ## Neuer Zählerstand für vorhanden Zähler
 URL: `POST */db/addZaehlerdaten`
@@ -294,18 +254,6 @@ URL: `POST */db/addZaehlerdaten`
 }
 ```
 
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
 
 ## Hinzufüngen eines Zählers
 URL: `POST */db/insertZaehler`
@@ -332,18 +280,6 @@ URL: `POST */db/insertZaehler`
 }
 ```
 
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
 
 ## Hinzufügen eines neuen Gebäudes
 URL: `POST */db/insertGebaeude`
@@ -376,19 +312,6 @@ URL: `POST */db/insertGebaeude`
 }
 ```
 
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
-
 
 # Umfrage für Mitarbeiter
 
@@ -414,18 +337,6 @@ JSON IST NICHT AKTUELL, DA ES EIN GET IST.
 }
 ```
 
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
 
 ## Gespeicherte Mitarbeiterumfragen einer Umfrage abfragen
 
@@ -495,18 +406,6 @@ Neue Version:
 }
 ```
 
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```
 
 ## Mitarbeiterumfrage ändern
 
@@ -577,18 +476,6 @@ URL: `POST */umfrage/insertUmfrage`
 }
 ```
 
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
-}
-```  
 
 ## Umfrage ändern
 
@@ -621,18 +508,5 @@ URL: `DELETE */umfrage/deleteUmfrage`
   "status": "success", //String Request erfolgreich
   "data": null,
   "error": null
-}
-```
-
->Response JSON im Fehlerfall
-
-```json
-{
-  "status": "error", //String, Request fehlgeschlagen
-  "data": null,
-  "error": {
-    "code": 404, //Integer, Fehlercode des Response Headers
-    "message": "Errormessage" //String, Errorspezifische Fehlermeldung
-  }
 }
 ```
