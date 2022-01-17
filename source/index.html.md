@@ -575,15 +575,15 @@ TODO Authentication als POST
       "jahr": 2020, //Integer
       "gebaeude": [
         {
-		  "gebaeudeNr": 1201,   //Integer
-		  "nutzflaeche": 35  //Integer
+          "gebaeudeNr": 1201,   //Integer
+          "nutzflaeche": 35  //Integer
 		}
 	  ],
 	  "itGeraete": [
-	    {
+        {
           "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-		  "anzahl": 5
-		}
+          "anzahl": 5
+        }
 	  ],
 	  "revision": 1, //Integer
 	  "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
