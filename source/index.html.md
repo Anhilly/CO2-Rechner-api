@@ -29,7 +29,8 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 Die folgende API-Endpunkte sind aktuell im Backend definiert. Alle Endpunkte werden aus dem Frontend in mindestens einem Fetch Request aufgerufen.
 
 Anfragen an `*/auswertung`  
-* `GET */auswertung/`   
+* `GET */auswertung`  
+* `POST */auswertung/updateSetLinkShare` 
 
 Anfragen an `*/auth`  
 * `POST */auth/anmeldung`     
@@ -54,7 +55,8 @@ Anfragen an `*/umfrage`
 * `GET */umfrage/gebaeude`     
 * `GET */umfrage/alleUmfragen`     
 * `GET */umfrage/GetAllUmfragenForUser`     
-* `GET */umfrage/GetUmfrageYear` (keine Auth)    
+* `GET */umfrage/GetUmfrageYear` (keine Auth)
+* `GET */umfrage/GetSharedResults` (keine Auth)    
 * `POST */umfrage/insertUmfrage`     
 * `POST */umfrage/updateUmfrage`     
 * `POST */umfrage/getUmfrage`      
@@ -104,6 +106,7 @@ URL: `GET */auswertung?id=`
     "jahr": 0,
     "umfragenanzahl": 10,
     "umfrageanteil": 0.5,
+    "linkShare": 0,
 
     "emissionenWaerme": 0.0,
     "emissionenStrom": 0.0,
@@ -118,10 +121,31 @@ URL: `GET */auswertung?id=`
     "emissionenProMitarbeiter": 0.0,
 	
     "vergleich2PersonenHaushalt": 0.0,
-    "vergleich4PersonenHaushalt": 0,0,
+    "vergleich4PersonenHaushalt": 0.0,
 }
 ```
 
+## Link Teilen umschalten
+URL: `POST */auswertung/updateSetLinkShare`
+
+>Request JSON
+
+```json
+ {
+  "umfrageID": "4a5sd48qw413",
+  "linkShareValue": 0,
+  "authToken": {
+    "username": "anton@tobi",
+    "sessiontoken": "51f86qad419d21",
+  },
+}
+```
+
+>Response JSON
+
+```json
+"data": null
+```
 
 # Authentifizierung
 
@@ -549,6 +573,7 @@ TODO Authentication als POST
           "anzahl": 5
         }
       ],
+      "auswertungFreigegeben": 0, //Integer
       "revision": 1, //Integer
       "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
     }
@@ -585,6 +610,7 @@ TODO Authentication als POST
           "anzahl": 5
         }
 	  ],
+    "auswertungFreigegeben": 0, //Integer
 	  "revision": 1, //Integer
 	  "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
 	}
@@ -605,7 +631,28 @@ URL: `GET */umfrage/GetUmfrageYear?id=[...]`
 >Response JSON
 
 ```json
-"data": 2020 //Integer
+"data": {
+  "jahr": 2020 // Integer
+} 
+```
+
+## Auswertung zum Teilen freigegeben
+
+Wird für das Teilen der Umfrageauswertung verwendet, um zu ermitteln ob die Auswertung durch unauthentifizierte Nutzer eingesehen werden darf.
+0 bedeutet keine Freigabe, 1 Teilen aktiviert.
+
+URL: `GET */umfrage/GetSharedResults?id=[...]`
+
+>Übergebene URL Parameter
+
+* "id": "asd3as712d4as5d6d" // Umfrage ID als string
+
+>Response JSON
+
+```json
+"data": {
+  "freigegeben": 0 // Integer
+}
 ```
 
 ## Umfrage einfügen
