@@ -106,7 +106,7 @@ URL: `GET */auswertung?id=`
     "jahr": 0,
     "umfragenanzahl": 10,
     "umfrageanteil": 0.5,
-    "linkShare": 0,
+    "auswertungFreigegeben": 0,
 
     "emissionenWaerme": 0.0,
     "emissionenStrom": 0.0,
@@ -133,7 +133,7 @@ URL: `POST */auswertung/updateSetLinkShare`
 ```json
  {
   "umfrageID": "4a5sd48qw413",
-  "linkShareValue": 0,
+  "freigabeWert": 0,
   "authToken": {
     "username": "anton@tobi",
     "sessiontoken": "51f86qad419d21",
