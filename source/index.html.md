@@ -36,7 +36,9 @@ Anfragen an `*/auth`
 * `POST */auth/anmeldung`     
 * `POST */auth/registrierung`     
 * `POST */auth/pruefeSession`   
-* `POST */auth/pruefeNutzerRolle`   
+* `POST */auth/passwortVergessen`
+* `POST */auth/emailBestaetigung`
+* `POST */auth/passwortAendern`
 * `DELETE */auth/abmeldung`   
 
 Anfragen an `*/db`   
@@ -212,6 +214,22 @@ URL: `POST */auth/pruefeSession`
   "rolle": 0, //Int, Rolle des Nutzers, 1 fuer Admin 0 fuer User
   "emailBestaetigt": 1 // Int Ob Mail bestaetigt wurde, 1 fuer bestaetigt 0 fuer nicht bestaetigt
 }
+```
+## Passwort Vergessen
+URL: `POST */auth/passwortVergessen`  
+
+>Request JSON
+
+```json
+{
+  "username": "testuser", //String, Nutzername des Nutzers
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
 ```
 
 
