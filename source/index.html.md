@@ -249,6 +249,28 @@ URL: `POST */auth/emailBestaetigung`
 "data": null
 ```
 
+## Passwort Aendern
+URL: `POST */auth/passwortAendern`  
+
+>Request JSON
+
+```json
+{
+  "authToken": {
+    "username": "anton@tobi",
+    "sessiontoken": "51f86qad419d21",
+  },
+  "passwort": "test1234",
+  "neuesPasswort": "test4321"
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
 
 ## Abmeldung
 URL: `DELETE */auth/abmeldung`
