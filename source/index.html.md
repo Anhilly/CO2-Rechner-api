@@ -232,6 +232,23 @@ URL: `POST */auth/passwortVergessen`
 "data": null
 ```
 
+## E-Mail Bestaetigung versenden
+URL: `POST */auth/emailBestaetigung`  
+
+>Request JSON
+
+```json
+{
+  "nutzerID": "61f47097e8b4071710362207", //String, NutzerID des Users
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
 
 ## Abmeldung
 URL: `DELETE */auth/abmeldung`
