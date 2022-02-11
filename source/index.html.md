@@ -211,25 +211,6 @@ URL: `POST */auth/pruefeSession`
 "data": null
 ```
 
-## Prüfung der Nutzerrolle
-URL: `POST */auth/pruefeNutzerRolle`
-
->Request JSON
-
-```json
-{
-  "username": "testuser", //String, Nutzername des Nutzers
-  "password": "verysecurepassword" //String, Password des Nutzers
-}
-```
-
->Response JSON
-
-```json
-"data": {
-  "rolle": 0 //Integer, 0 User; 1 Admin
-}
-```
 
 ## Abmeldung
 URL: `DELETE */auth/abmeldung`
