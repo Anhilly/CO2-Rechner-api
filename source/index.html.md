@@ -208,7 +208,10 @@ URL: `POST */auth/pruefeSession`
 >Response JSON im Erfolgsfall
 
 ```json
-"data": null
+"data": {
+  "rolle": 0, //Int, Rolle des Nutzers, 1 fuer Admin 0 fuer User
+  "emailBestaetigt": 1 // Int Ob Mail bestaetigt wurde, 1 fuer bestaetigt 0 fuer nicht bestaetigt
+}
 ```
 
 
