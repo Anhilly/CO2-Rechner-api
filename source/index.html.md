@@ -83,7 +83,7 @@ Im Fehlerfall steht im status Feld der String "error" und im error Feld ist ein 
   "data": null,
   "error": {
  	"code": 400,
-	"message": "Es konnte die Request nicht verarbeitet werden",
+	"message": "Es konnte der Request nicht verarbeitet werden",
   }
 }
 ```
