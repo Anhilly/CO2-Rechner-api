@@ -170,7 +170,8 @@ URL: `POST */auth/anmeldung`
 ```json
 "data": {
     "message": "Nutzer authentifiziert",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh" //String, Sessiontoken mit TTL
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh", //String, Sessiontoken mit TTL
+    "rolle": 0
 }
 ```
 
