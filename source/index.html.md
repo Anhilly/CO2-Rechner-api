@@ -29,7 +29,7 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 Die folgende API-Endpunkte sind aktuell im Backend definiert. Alle Endpunkte werden aus dem Frontend in mindestens einem Fetch Request aufgerufen.
 
 Anfragen an `*/auswertung`  
-* `GET */auswertung`  
+* `POST */auswertung`  
 * `POST */auswertung/updateSetLinkShare` 
 
 Anfragen an `*/auth`  
@@ -49,16 +49,16 @@ Anfragen an `*/db`
 
 Anfragen an `*/mitarbeiterUmfrage`    
 * `GET */mitarbeiterUmfrage/exists`  (kein Auth)    
-* `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`    
+* `POST */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
 * `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage` (keine Auth)    
-* `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`    
+* `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`    (nicht genutzt)
 
 Anfragen an `*/umfrage`    
-* `GET */umfrage/gebaeude`     
-* `GET */umfrage/alleUmfragen`     
-* `GET */umfrage/GetAllUmfragenForUser`     
 * `GET */umfrage/GetUmfrageYear` (keine Auth)
 * `GET */umfrage/GetSharedResults` (keine Auth)    
+* `POST */umfrage/gebaeude`
+* `POST */umfrage/alleUmfragen`     
+* `POST */umfrage/GetAllUmfragenForUser`
 * `POST */umfrage/insertUmfrage`     
 * `POST */umfrage/updateUmfrage`     
 * `POST */umfrage/getUmfrage`      
@@ -95,8 +95,19 @@ Im Nachfolgenden werden wir immer nur die data Felder auflisten.
 Die folgenden Endpunkte sind unter `*/auswertung`  
 
 ## Auswertung für Umfrage erstellen
-URL: `GET */auswertung?id=`
+URL: `POST */auswertung`
 
+>Request JSON
+
+```json
+{
+  "umfrageID": "4a5sd48qw413",
+  "authToken": {
+    "username": "felix@martin",
+    "sessiontoken": "51f86qad419d21",
+  },
+}
+```
 
 >Response JSON im Erfolgsfall
 
@@ -422,15 +433,26 @@ URL: `GET */mitarbeiterUmfrage/exists?id=[...]`
 "data": {
   "umfrageID": "123", // umfrage ID als string. Leerer String (""), wenn Umfrage nicht existiert.
   "bezeichnung": "Umfragename",
-  "complete":  true //bool,
+  "complete":  true, //bool
 }
 ```
 
 
 ## Gespeicherte Mitarbeiterumfragen einer Umfrage abfragen
 
-URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
+URL: `POST */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
 
+>Request JSON
+
+```json
+{
+  "umfrageID": "0261344r1asdas23dfgasd",
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+}
+```
 
 >Response JSON im Erfolgsfall
 
@@ -443,7 +465,7 @@ URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
         {	
           "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
           "strecke": 123,   //Integer, in km
-          "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
+          "personenanzahl": 1   //Integer, 1 = alleine, >1 = Fahrgemeinschaft
         }
       ],
       "tageImBuero": 7, //Integer
@@ -523,8 +545,8 @@ URL: `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`
 ```json
 {
   "authToken": {
-	"username": 	"testuser",
-	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+	  "username": 	"testuser",
+	  "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
   },
   "pendelweg": [
     {
@@ -568,97 +590,6 @@ TODO: hier sollte null ausreichen.
 
 Die folgenden Endpunkte sind unter `*/umfrage`  
 
-## Alle Gebäude aus Datenbank
-
-URL: `GET */umfrage/gebaeude`   
-
->Übergebene URL Parameter
-
-Keine
-
-
->Response JSON
-
-```json
-"data": {
-  "gebaeude": [ 1101, 3012 ] //Integerarray
-}
-```
-
-## Alle Umfragen aus Datenbank
-
-URL: `GET */umfrage/alleUmfragen`     
-
-Admin only
-
-TODO Authentication als POST
-
->Response JSON
-
-```json
-"data": {
-  "umfragen": [ 
-    {	
-      "_id": "aidhb731dh9dh13jd",
-      "bezeichnung": "umfragename",
-      "mitarbeiteranzahl": 24, //Integer
-      "jahr": 2020, //Integer
-      "gebaeude": [
-        {
-          "gebaeudeNr": 1201,   //Integer
-          "nutzflaeche": 35  //Integer
-        }
-      ],
-      "itGeraete": [
-        {
-          "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-          "anzahl": 5
-        }
-      ],
-      "auswertungFreigegeben": 0, //Integer
-      "revision": 1, //Integer
-      "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
-    }
-  ]
-}
-```
-
-
-## Alle Umfragen eines Nutzers
-
-URL: `GET */umfrage/GetAllUmfragenForUser`     
-
-TODO Authentication als POST
-
->Response JSON
-
-```json
-"data": {
-  "umfragen": [ 
-    {
-      "_id": "aidhb731dh9dh13jd",
-      "bezeichnung": "umfragename",
-      "mitarbeiteranzahl": 24, //Integer
-      "jahr": 2020, //Integer
-      "gebaeude": [
-        {
-          "gebaeudeNr": 1201,   //Integer
-          "nutzflaeche": 35  //Integer
-		}
-	  ],
-	  "itGeraete": [
-        {
-          "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-          "anzahl": 5
-        }
-	  ],
-    "auswertungFreigegeben": 0, //Integer
-	  "revision": 1, //Integer
-	  "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
-	}
-  ]
-}
-```
 
 ## Bilanzierungsjahr einer Umfrage
     
@@ -694,6 +625,117 @@ URL: `GET */umfrage/GetSharedResults?id=[...]`
 ```json
 "data": {
   "freigegeben": 0 // Integer
+}
+```
+
+## Alle Gebäude aus Datenbank
+
+URL: `POST */umfrage/gebaeude`   
+
+>Request JSON
+
+```json
+"authToken": {
+  "username": 	"testuser",
+	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+}
+```
+
+
+>Response JSON
+
+```json
+"data": {
+  "gebaeude": [ 1101, 3012 ] //Integerarray
+}
+```
+
+## Alle Umfragen aus Datenbank
+
+URL: `POST */umfrage/alleUmfragen`     
+
+Admin only
+
+>Request JSON
+
+```json
+"authToken": {
+  "username": 	"testuser",
+	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+}
+```
+
+>Response JSON
+
+```json
+"data": {
+  "umfragen": [ 
+    {	
+      "_id": "aidhb731dh9dh13jd",
+      "bezeichnung": "umfragename",
+      "mitarbeiteranzahl": 24, //Integer
+      "jahr": 2020, //Integer
+      "gebaeude": [
+        {
+          "gebaeudeNr": 1201,   //Integer
+          "nutzflaeche": 35  //Integer
+        }
+      ],
+      "itGeraete": [
+        {
+          "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+          "anzahl": 5
+        }
+      ],
+      "auswertungFreigegeben": 0, //Integer
+      "revision": 1, //Integer
+      "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+    }
+  ]
+}
+```
+
+
+## Alle Umfragen eines Nutzers
+
+URL: `POST */umfrage/GetAllUmfragenForUser`     
+
+>Request JSON
+
+```json
+"authToken": {
+  "username": 	"testuser",
+	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+}
+```
+
+>Response JSON
+
+```json
+"data": {
+  "umfragen": [ 
+    {
+      "_id": "aidhb731dh9dh13jd",
+      "bezeichnung": "umfragename",
+      "mitarbeiteranzahl": 24, //Integer
+      "jahr": 2020, //Integer
+      "gebaeude": [
+        {
+          "gebaeudeNr": 1201,   //Integer
+          "nutzflaeche": 35  //Integer
+		}
+	  ],
+	  "itGeraete": [
+        {
+          "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
+          "anzahl": 5
+        }
+	  ],
+    "auswertungFreigegeben": 0, //Integer
+	  "revision": 1, //Integer
+	  "mitarbeiterUmfrageRef": ["fh7813hd9f1j3", "fg21fg18das9d31"] //Stringarray
+	}
+  ]
 }
 ```
 
