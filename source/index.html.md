@@ -61,7 +61,8 @@ Anfragen an `*/umfrage`
 * `POST */umfrage/GetAllUmfragenForUser`
 * `POST */umfrage/insertUmfrage`     
 * `POST */umfrage/updateUmfrage`     
-* `POST */umfrage/getUmfrage`      
+* `POST */umfrage/getUmfrage`
+* `POST */umfrage/duplicateUmfrage`       
 * `DELETE */umfrage/deleteUmfrage`     
 
 # Format der Response
@@ -883,4 +884,28 @@ URL: `DELETE */umfrage/deleteUmfrage`
 
 ```json
 "data": null
+```
+
+## Umfrage duplizieren
+
+URL: `DELETE */umfrage/duplicateUmfrage`
+
+>Request JSON 
+
+```json
+{
+  "umfrageID": "61cdb9e6d4ca5003d1ce75dc"
+  "authToken": {
+    "username": "testuser"
+    "sessiontoken": "545a6scasd8741dfwer"
+  }
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": {
+  "umfrageID": "61cdb9e6d4ca5003d1ce75dc"
+}
 ```
