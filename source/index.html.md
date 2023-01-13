@@ -44,6 +44,10 @@ Anfragen an `*/auth`
 Anfragen an `*/db`   
 * `POST */db/addFaktor`   
 * `POST */db/addZaehlerdaten`   
+* `POST */db/addZaehlerdatenCSV`   
+* `POST */db/addStandardZaehlerdaten`   
+* `POST */db/addVersorger`   
+* `POST */db/addStandardVersorger`   
 * `POST */db/insertZaehler`   
 * `POST */db/insertGebaeude`   
 
@@ -321,6 +325,7 @@ URL: `POST */db/addFaktor`
     "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
   },
     "idEnergieversorgung": 1, //Integer
+    "idVertrag": 1,           //Integer
     "jahr": 2020,             //Integer
     "wert": 2000,             //Integer
 }
@@ -348,6 +353,96 @@ URL: `POST */db/addZaehlerdaten`
   "idEnergieversorgung": 1, //Integer
   "jahr": 2020,     //Integer
   "wert": 2000.0    //float
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
+## Standard Zählerstand für alle vorhanden Zähler
+URL: `POST */db/addStandardZaehlerdaten`
+
+>Request JSON
+
+```json
+{
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+  "jahr": 2020,     //Integer
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
+## Mehrere Zählerstand über CSV-Datei
+URL: `POST */db/addZaehlerdatenCSV`
+
+>Request JSON
+
+```json
+{
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+  "pkEnergie": [1],           //Array of Integer
+  "idEnergieversorgung": [1], //Array of Integer
+  "jahr": 2020,               //Integer
+  "wert": [2000.0]            //Array of float
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
+## Neuen Versorger für vorhandenes Gebäude
+URL: `POST */db/addVersorger`
+
+>Request JSON
+
+```json
+{
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+  "nr": 1,                  //Integer
+  "idEnergieversorgung": 1, //Integer
+  "jahr": 2020,             //Integer
+  "idVertrag": 1            //Integer
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
+## Standard Versorger für alle vorhanden Zähler
+URL: `POST */db/addStandardVersorger`
+
+>Request JSON
+
+```json
+{
+  "authToken": {
+    "username": 	"testuser",
+    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+  },
+  "jahr": 2020,     //Integer
 }
 ```
 
@@ -405,7 +500,10 @@ URL: `POST */db/insertGebaeude`
     "vf": 0.0,		//Float
     "freif": 0.0, 	//Float
     "gesamtf": 0.0 	//Float
-  }
+  },
+  "waerme_versorger_jahre": [1],  //Array of Integer
+  "kaelte_versorger_jahre": [1],  //Array of Integer
+  "strom_versorger_jahre": [1],   //Array of Integer
 }
 ```
 
