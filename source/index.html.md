@@ -137,6 +137,11 @@ URL: `POST */auswertung`
     "emissionenPendelwege": 0.0,
     "emissionenGesamt": 0.0,
     "emissionenProMitarbeiter": 0.0,
+    
+    "verbrauchStrom": 0.0,
+    "verbrauchWaerme": 0.0,
+    "verbrauchKaelte": 0.0,
+    "verbrauchEnergie": 0.0,
 	
     "vergleich2PersonenHaushalt": 0.0,
     "vergleich4PersonenHaushalt": 0.0,
