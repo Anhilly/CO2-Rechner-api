@@ -10,7 +10,7 @@ Die API Dokumentation beschreibt alle API Funktionen, welche die Kommunikation z
 
 Der Projektcode ist in den beiden folgenden Projekten einsehbar.
 
-Das Frontend, welches eine webbasierte Interaktionsseite bietet, ist hier einsehbar: [Github](https://github.com/Lithium-1Hauptgruppe/CO2-Rechner-TU-Darmstadt-Frontend)  
+Das Frontend, welches eine webbasierte Interaktionsseite bietet, ist hier einsehbar: [Github](https://github.com/felix-marx/CO2-Rechner-TU-Darmstadt-Frontend)  
 Das Backend, welches als Controller und Schnittstelle zur Datenbank dient, ist hier einsehbar: [Github](https://github.com/Anhilly/co2-rechner-TU-Darmstadt-backend)
 
 ## Verwendung der API Dokumentation
