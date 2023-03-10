@@ -61,6 +61,7 @@ Anfragen an `*/umfrage`
 * `GET */umfrage/GetUmfrageYear` (keine Auth)
 * `GET */umfrage/GetSharedResults` (keine Auth)    
 * `POST */umfrage/gebaeude`
+* `POST */umfrage/gebaeudeUndZaehler` 
 * `POST */umfrage/alleUmfragen`     
 * `POST */umfrage/GetAllUmfragenForUser`
 * `POST */umfrage/insertUmfrage`     
@@ -753,6 +754,46 @@ URL: `POST */umfrage/gebaeude`
   "gebaeude": [ 1101, 3012 ] //Integerarray
 }
 ```
+
+## Alle Gebäude und Zähler aus Datenbank
+
+URL: `POST */umfrage/gebaeudeUndZaehler`   
+
+>Request JSON
+
+```json
+"authToken": {
+  "username": 	"testuser",
+	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
+}
+```
+
+>Response JSON
+
+```json
+"data": {
+  "gebaeude": [ 
+    {	
+      "nr": 0,              // Integer
+      "kaelteRef": [0, 0],  // Integer-Array
+      "waermeRef": [0, 0],  // Integer-Array
+      "stromRef": [0, 0],   // Integer-Array
+    }
+  ],
+  "zaehler": [
+    {
+      "pkEnergie": 0,         // Integer
+      "zaehlerdatenVorhanden": [
+        {
+          "jahr": 2000,       // Integer
+          "vorhanden": true,  // Boolean
+        }
+      ],
+    }
+  ]
+}
+```
+
 
 ## Alle Umfragen aus Datenbank
 
