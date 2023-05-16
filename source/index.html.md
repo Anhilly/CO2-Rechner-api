@@ -146,6 +146,32 @@ URL: `POST */auswertung`
 	
     "vergleich2PersonenHaushalt": 0.0,
     "vergleich4PersonenHaushalt": 0.0,
+
+    "gebauedeIDsUndZaehler": [ 
+      {	
+        "nr": 0,              // Integer
+        "kaelteRef": [0, 0],  // Integer-Array
+        "waermeRef": [0, 0],  // Integer-Array
+        "stromRef": [0, 0],   // Integer-Array
+      }
+    ],
+    "zaehler": [
+      {
+        "pkEnergie": 0,         // Integer
+        "zaehlerdatenVorhanden": [
+          {
+            "jahr": 2000,       // Integer
+            "vorhanden": true,  // Boolean
+          }
+        ],
+      }
+    ],
+    "umfrageGebaeude": [
+      {
+        "gebaeudeNr": 0,
+        "nutzflaeche": 0,
+      }
+    ]
 }
 ```
 
