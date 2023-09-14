@@ -30,7 +30,7 @@ Die folgende API-Endpunkte sind aktuell im Backend definiert. Alle Endpunkte wer
 
 Anfragen an `*/auswertung`  
 * `GET */auswertung`  (special auth)
-* `POST */auswertung/updateSetLinkShare` 
+* `POST */auswertung/updateLinkShare` 
 
 Anfragen an `*/db`   
 * `POST */db/addFaktor`                 (admin auth)
@@ -42,28 +42,28 @@ Anfragen an `*/db`
 * `POST */db/insertZaehler`             (admin auth)
 * `POST */db/insertGebaeude`            (admin auth)
 
-Anfragen an `*/mitarbeiterUmfrage`    
-* `GET */mitarbeiterUmfrage/exists`  (kein Auth)    
-* `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`  (nicht genutzt, admin auth)
-* `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage` (keine Auth)    
+Anfragen an `*/nutzer`
+* `GET */nutzer/pruefeNutzer`
+* `GET */nutzer/rolle`
+* `DELETE */nutzer`
 
-Anfragen an `*/nutzerdaten`
-* `GET */nutzerdaten/checkUser`
-* `GET */nutzerdaten/checkRolle`
-* `DELETE */nutzerdaten/deleteNutzerdaten`
+Anfragen an `*/mitarbeiterumfrage`    
+* `GET */mitarbeiterumfrage/exists`  (kein Auth)    
+* `GET */mitarbeiterumfrage/mitarbeiterumfrageFuerUmfrage`  (nicht genutzt, admin auth)
+* `POST */mitarbeiterumfrage/insert` (keine Auth)    
 
 Anfragen an `*/umfrage`    
-* `GET */umfrage/umfrage`
-* `GET */umfrage/duplicateUmfrage` 
-* `GET */umfrage/umfrageYear`    (keine Auth)
+* `GET */umfrage`
+* `GET */umfrage/duplicate` 
+* `GET */umfrage/jahr`    (keine Auth)
 * `GET */umfrage/sharedResults`  (keine Auth)    
 * `GET */umfrage/gebaeude`
 * `GET */umfrage/gebaeudeUndZaehler` 
 * `GET */umfrage/alleUmfragen`     (admin auth)
-* `GET */umfrage/allUmfragenForUser`
-* `POST */umfrage/insertUmfrage`     
-* `POST */umfrage/updateUmfrage`      
-* `DELETE */umfrage/deleteUmfrage`     
+* `GET */umfrage/alleUmfragenVonUser`
+* `POST */umfrage/insert`     
+* `POST */umfrage/update`      
+* `DELETE */umfrage`     
 
 # Format der Response
 
@@ -159,7 +159,7 @@ URL: `GET */auswertung?id=[umfrageID]`
 ```
 
 ## Link Teilen umschalten
-URL: `POST */auswertung/updateSetLinkShare`
+URL: `POST */auswertung/updateLinkShare`
 
 >Request JSON
 
@@ -351,12 +351,12 @@ URL: `POST */db/insertGebaeude`
 
 # Nutzerdaten
 
-Die folgenden Endpunkte sind unter `*/nutzerdaten`
+Die folgenden Endpunkte sind unter `*/nutzer`
 
 ## Existenz eines Nutzers prüfen
 Prüft, ob ein Nutzer in der Datenbank schon existiert, oder ob ein Nutzer migriert werden kann. Andernfalls wird ein neuer Nutzer erstellt. Server verwendet Daten aus den Auth Token.
 
-URL: `GET */nutzerdaten/checkUser`
+URL: `GET */nutzer/pruefeNutzer`
 
 >Response JSON im Erfolgsfall
 
@@ -365,7 +365,7 @@ URL: `GET */nutzerdaten/checkUser`
 ```
 
 ## Liefert Rolle eines Nutzers
-URL: `GET */nutzerdaten/checkRolle`
+URL: `GET */nutzer/rolle`
 
 >Response JSON im Erfolgsfall
 
@@ -376,7 +376,7 @@ URL: `GET */nutzerdaten/checkRolle`
 ```
 
 ## Löscht einen Nutzer
-URL: `DELETE */nutzerdaten/deleteNutzerdaten`
+URL: `DELETE */nutzer`
 
 >Request JSON
 
@@ -395,10 +395,10 @@ URL: `DELETE */nutzerdaten/deleteNutzerdaten`
 
 # Umfrage für Mitarbeiter
 
-Die folgenden Endpunkte sind unter `*/mitarbeiterUmfrage`  
+Die folgenden Endpunkte sind unter `*/mitarbeiterumfrage`  
 
 ## Existenz einer Umfrage prüfen
-URL: `GET */mitarbeiterUmfrage/exists?id=[umfrageID]`
+URL: `GET */mitarbeiterumfrage/exists?id=[umfrageID]`
 
 >Übergebene URL Parameter
 
@@ -418,7 +418,7 @@ URL: `GET */mitarbeiterUmfrage/exists?id=[umfrageID]`
 
 ## Gespeicherte Mitarbeiterumfragen einer Umfrage abfragen
 
-URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage?id=[umfrageID]`
+URL: `GET */mitarbeiterumfrage/mitarbeiterumfrageFuerUmfrage?id=[umfrageID]`
 
 >Übergebene URL Parameter
 
@@ -428,7 +428,7 @@ URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage?id=[umfrageID]`
 
 ```json
 "data": {
-  "mitarbeiterUmfragen": [
+  "mitarbeiterumfragen": [
     {
       "_id": "wefg3872ehadsij1asd1t",
       "pendelweg": [
@@ -464,7 +464,7 @@ URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage?id=[umfrageID]`
 Hier werden die Daten der Umfrage an den Server gesendet und dort in die Datenbank eingefügt. Als Antwort wird die interne ID der neu erstellten Umfrage zurückgesendet.
 
 
-URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
+URL: `POST */mitarbeiterumfrage/insert`
 
 >Request JSON
 
@@ -512,7 +512,7 @@ Die folgenden Endpunkte sind unter `*/umfrage`
     
 Wird für Mitarbeiterumfragen verwendet, um das Bilanzierungsjahr anzuzeigen.
 
-URL: `GET */umfrage/umfrageYear?id=[umfrageID]`  
+URL: `GET */umfrage/jahr?id=[umfrageID]`  
 
 >Übergebene URL Parameter
 
@@ -531,7 +531,7 @@ URL: `GET */umfrage/umfrageYear?id=[umfrageID]`
 Wird für das Teilen der Umfrageauswertung verwendet, um zu ermitteln ob die Auswertung durch unauthentifizierte Nutzer eingesehen werden darf.
 0 bedeutet keine Freigabe, 1 Teilen aktiviert.
 
-URL: `GET */umfrage/GetSharedResults?id=[...]`
+URL: `GET */umfrage/sharedResults?id=[...]`
 
 >Übergebene URL Parameter
 
@@ -627,7 +627,7 @@ Admin only
 
 ## Alle Umfragen eines Nutzers
 
-URL: `GET */umfrage/allUmfragenForUser`     
+URL: `GET */umfrage/allUmfragenVonUser`     
 
 >Response JSON
 
@@ -661,7 +661,7 @@ URL: `GET */umfrage/allUmfragenForUser`
 
 ## Umfrage einfügen
 
-URL: `POST */umfrage/insertUmfrage`
+URL: `POST */umfrage/insert`
 
 >Request JSON
 
@@ -697,7 +697,7 @@ URL: `POST */umfrage/insertUmfrage`
 
 ## Umfrage ändern
 
-URL: `POST */umfrage/updateUmfrage`     
+URL: `POST */umfrage/update`     
 
 >Request JSON
 
@@ -736,7 +736,7 @@ TODO kann vermutlich auch null sein, hängt von Adminpanel ab
 
 ## Umfrage aus Datenbank
 
-URL: `POST */umfrage/umfrage?id=[umfrageID]`      
+URL: `GET */umfrage?id=[umfrageID]`      
 
 >Response JSON
 
@@ -765,7 +765,7 @@ URL: `POST */umfrage/umfrage?id=[umfrageID]`
 
 ## Umfrage löschen
 
-URL: `DELETE */umfrage/deleteUmfrage`
+URL: `DELETE */umfrage`
 
 >Request JSON 
 
@@ -783,7 +783,7 @@ URL: `DELETE */umfrage/deleteUmfrage`
 
 ## Umfrage duplizieren
 
-URL: `DELETE */umfrage/duplicateUmfrage`
+URL: `GET */umfrage/duplicate`
 
 >Request JSON 
 
