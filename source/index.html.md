@@ -29,45 +29,40 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 Die folgende API-Endpunkte sind aktuell im Backend definiert. Alle Endpunkte werden aus dem Frontend in mindestens einem Fetch Request aufgerufen.
 
 Anfragen an `*/auswertung`  
-* `POST */auswertung`  
+* `GET */auswertung`  (special auth)
 * `POST */auswertung/updateSetLinkShare` 
 
-Anfragen an `*/auth`  
-* `POST */auth/anmeldung`     
-* `POST */auth/registrierung`     
-* `POST */auth/pruefeSession`   
-* `POST */auth/passwortVergessen`
-* `POST */auth/emailBestaetigung`
-* `POST */auth/passwortAendern`
-* `DELETE */auth/abmeldung`   
-
 Anfragen an `*/db`   
-* `POST */db/addFaktor`   
-* `POST */db/addZaehlerdaten`   
-* `POST */db/addZaehlerdatenCSV`   
-* `POST */db/addStandardZaehlerdaten`   
-* `POST */db/addVersorger`   
-* `POST */db/addStandardVersorger`   
-* `POST */db/insertZaehler`   
-* `POST */db/insertGebaeude`   
+* `POST */db/addFaktor`                 (admin auth)
+* `POST */db/addZaehlerdaten`           (admin auth)
+* `POST */db/addZaehlerdatenCSV`        (admin auth)
+* `POST */db/addStandardZaehlerdaten`   (admin auth)
+* `POST */db/addVersorger`              (admin auth)
+* `POST */db/addStandardVersorger`      (admin auth)
+* `POST */db/insertZaehler`             (admin auth)
+* `POST */db/insertGebaeude`            (admin auth)
 
 Anfragen an `*/mitarbeiterUmfrage`    
 * `GET */mitarbeiterUmfrage/exists`  (kein Auth)    
-* `POST */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
+* `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`  (nicht genutzt, admin auth)
 * `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage` (keine Auth)    
-* `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage`    (nicht genutzt)
+
+Anfragen an `*/nutzerdaten`
+* `GET */nutzerdaten/checkUser`
+* `GET */nutzerdaten/checkRolle`
+* `DELETE */nutzerdaten/deleteNutzerdaten`
 
 Anfragen an `*/umfrage`    
-* `GET */umfrage/GetUmfrageYear` (keine Auth)
-* `GET */umfrage/GetSharedResults` (keine Auth)    
-* `POST */umfrage/gebaeude`
-* `POST */umfrage/gebaeudeUndZaehler` 
-* `POST */umfrage/alleUmfragen`     
-* `POST */umfrage/GetAllUmfragenForUser`
+* `GET */umfrage/umfrage`
+* `GET */umfrage/duplicateUmfrage` 
+* `GET */umfrage/umfrageYear`    (keine Auth)
+* `GET */umfrage/sharedResults`  (keine Auth)    
+* `GET */umfrage/gebaeude`
+* `GET */umfrage/gebaeudeUndZaehler` 
+* `GET */umfrage/alleUmfragen`     (admin auth)
+* `GET */umfrage/allUmfragenForUser`
 * `POST */umfrage/insertUmfrage`     
-* `POST */umfrage/updateUmfrage`     
-* `POST */umfrage/getUmfrage`
-* `POST */umfrage/duplicateUmfrage`       
+* `POST */umfrage/updateUmfrage`      
 * `DELETE */umfrage/deleteUmfrage`     
 
 # Format der Response
@@ -101,19 +96,7 @@ Im Nachfolgenden werden wir immer nur die data Felder auflisten.
 Die folgenden Endpunkte sind unter `*/auswertung`  
 
 ## Auswertung für Umfrage erstellen
-URL: `POST */auswertung`
-
->Request JSON
-
-```json
-{
-  "umfrageID": "4a5sd48qw413",
-  "authToken": {
-    "username": "felix@martin",
-    "sessiontoken": "51f86qad419d21",
-  },
-}
-```
+URL: `GET */auswertung?id=[umfrageID]`
 
 >Response JSON im Erfolgsfall
 
@@ -184,10 +167,6 @@ URL: `POST */auswertung/updateSetLinkShare`
  {
   "umfrageID": "4a5sd48qw413",
   "freigabeWert": 0,
-  "authToken": {
-    "username": "anton@tobi",
-    "sessiontoken": "51f86qad419d21",
-  },
 }
 ```
 
@@ -196,150 +175,6 @@ URL: `POST */auswertung/updateSetLinkShare`
 ```json
 "data": null
 ```
-
-# Authentifizierung
-
-Die folgenden Endpunkte sind unter `*/auth`  
-
-## Anmeldung
-URL: `POST */auth/anmeldung` 
-
->Request JSON
-
-```json
-{
-  "username": "testuser", //String, Nutzername des Nutzers
-  "password": "verysecurepassword" //String, Password des Nutzers
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-"data": {
-    "message": "Nutzer authentifiziert",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh", //String, Sessiontoken mit TTL
-    "rolle": 0
-}
-```
-
-## Registrierung
-URL: `POST */auth/registrierung`
-
->Request JSON
-
-```json
-{
-  "username": "testuser", //String, Nutzername des Nutzers
-  "password": "verysecurepassword" //String, Password des Nutzers
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-"data": {
-    "message": "Der neue Nutzeraccount wurde erstellt",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh" //String, Sessiontoken mit TTL
-}
-```
-
-## Prüfung der Nutzersession
-URL: `POST */auth/pruefeSession`  
-
->Request JSON
-
-```json
-{
-  "username": "testuser", //String, Nutzername des Nutzers
-  "password": "verysecurepassword" //String, Password des Nutzers
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-"data": {
-  "rolle": 0, //Int, Rolle des Nutzers, 1 fuer Admin 0 fuer User
-  "emailBestaetigt": 1 // Int Ob Mail bestaetigt wurde, 1 fuer bestaetigt 0 fuer nicht bestaetigt
-}
-```
-## Passwort Vergessen
-URL: `POST */auth/passwortVergessen`  
-
->Request JSON
-
-```json
-{
-  "username": "testuser", //String, Nutzername des Nutzers
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-"data": null
-```
-
-## E-Mail Bestaetigung versenden
-URL: `POST */auth/emailBestaetigung`  
-
->Request JSON
-
-```json
-{
-  "nutzerID": "61f47097e8b4071710362207", //String, NutzerID des Users
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-"data": null
-```
-
-## Passwort Aendern
-URL: `POST */auth/passwortAendern`  
-
->Request JSON
-
-```json
-{
-  "authToken": {
-    "username": "anton@tobi",
-    "sessiontoken": "51f86qad419d21",
-  },
-  "passwort": "test1234",
-  "neuesPasswort": "test4321"
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-"data": null
-```
-
-
-## Abmeldung
-URL: `DELETE */auth/abmeldung`
-
->Request JSON
-
-```json
-{
-  "username": "testuser" //String, Email des Nutzers
-}
-```
-
->Response JSON im Erfolgsfall
-
-```json
-"data": {
-  "message": "Der Session Token wurde gelöscht"
-}
-```
-
 
 # Eintragen von neuen Daten (Admin-Feature)
 
@@ -352,10 +187,6 @@ URL: `POST */db/addFaktor`
 
 ```json
 {
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
     "idEnergieversorgung": 1, //Integer
     "idVertrag": 1,           //Integer
     "jahr": 2020,             //Integer
@@ -377,10 +208,6 @@ URL: `POST */db/addZaehlerdaten`
 
 ```json
 {
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
   "pkEnergie": 1,   //Integer
   "idEnergieversorgung": 1, //Integer
   "jahr": 2020,     //Integer
@@ -401,10 +228,6 @@ URL: `POST */db/addStandardZaehlerdaten`
 
 ```json
 {
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
   "jahr": 2020,     //Integer
 }
 ```
@@ -422,10 +245,6 @@ URL: `POST */db/addZaehlerdatenCSV`
 
 ```json
 {
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
   "pkEnergie": [1],           //Array of Integer
   "idEnergieversorgung": [1], //Array of Integer
   "jahr": 2020,               //Integer
@@ -446,10 +265,6 @@ URL: `POST */db/addVersorger`
 
 ```json
 {
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
   "nr": 1,                  //Integer
   "idEnergieversorgung": 1, //Integer
   "jahr": 2020,             //Integer
@@ -470,10 +285,6 @@ URL: `POST */db/addStandardVersorger`
 
 ```json
 {
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
   "jahr": 2020,     //Integer
 }
 ```
@@ -492,10 +303,6 @@ URL: `POST */db/insertZaehler`
 
 ```json
 {
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
   "pkEnergie": 1,           //Integer
   "idEnergieversorgung": 1, //Integer
   "bezeichnung": "",
@@ -518,10 +325,6 @@ URL: `POST */db/insertGebaeude`
 
 ```json
 {
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
   "nr": 1101,       //Integer
   "bezeichnung": "",
   "flaeche": {
@@ -546,12 +349,56 @@ URL: `POST */db/insertGebaeude`
 ```
 
 
+# Nutzerdaten
+
+Die folgenden Endpunkte sind unter `*/nutzerdaten`
+
+## Existenz eines Nutzers prüfen
+Prüft, ob ein Nutzer in der Datenbank schon existiert, oder ob ein Nutzer migriert werden kann. Andernfalls wird ein neuer Nutzer erstellt. Server verwendet Daten aus den Auth Token.
+
+URL: `GET */nutzerdaten/checkUser`
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
+## Liefert Rolle eines Nutzers
+URL: `GET */nutzerdaten/checkRolle`
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": {
+  "rolle": 0, //Integer
+}
+```
+
+## Löscht einen Nutzer
+URL: `DELETE */nutzerdaten/deleteNutzerdaten`
+
+>Request JSON
+
+```json
+{
+  "username": "xyz",       //String
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": "xyz"
+```
+
+
 # Umfrage für Mitarbeiter
 
 Die folgenden Endpunkte sind unter `*/mitarbeiterUmfrage`  
 
 ## Existenz einer Umfrage prüfen
-URL: `GET */mitarbeiterUmfrage/exists?id=[...]`
+URL: `GET */mitarbeiterUmfrage/exists?id=[umfrageID]`
 
 >Übergebene URL Parameter
 
@@ -571,19 +418,11 @@ URL: `GET */mitarbeiterUmfrage/exists?id=[...]`
 
 ## Gespeicherte Mitarbeiterumfragen einer Umfrage abfragen
 
-URL: `POST */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage`
+URL: `GET */mitarbeiterUmfrage/mitarbeiterUmfrageForUmfrage?id=[umfrageID]`
 
->Request JSON
+>Übergebene URL Parameter
 
-```json
-{
-  "umfrageID": "0261344r1asdas23dfgasd",
-  "authToken": {
-    "username": 	"testuser",
-    "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
-}
-```
+* "id": "asd3as712d4as5d6d" // Umfrage ID als string
 
 >Response JSON im Erfolgsfall
 
@@ -664,59 +503,6 @@ URL: `POST */mitarbeiterUmfrage/insertMitarbeiterUmfrage`
 "data": null
 ```
 
-
-## Mitarbeiterumfrage ändern
-
-Admin only
-
-URL: `POST */mitarbeiterUmfrage/updateMitarbeiterUmfrage` 
-
->Request JSON
-
-```json
-{
-  "authToken": {
-	  "username": 	"testuser",
-	  "sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-  },
-  "pendelweg": [
-    {
-      "idPendelweg": 1,  //Integer, korrespondieren mit Index in Datenbank
-      "strecke": 123,   //Integer, in km
-      "personenanzahl": 1   //Inetger, 1 = alleine, >1 = Fahrgemeinschaft
-    }
-  ],
-  "tageImBuero": 7, //Integer
-  "dienstreise":[
-    {
-      "idDienstreise": 2,  //Integer, korrespondieren mit Index in Datenbank
-      "streckentyp": "Langstrecke",
-      "strecke": 800, //Integer, in km
-      "tankart": ""
-    }
-  ],
-  "itGeraete": [
-    {
-      "idITGeraete": 2, //Integer, korrespondieren mit Index in Datenbank
-      "anzahl": 1
-    }
-  ],
-  "idUmfrage": "123" // umfrage ID als string
-}
-```
-
->Response JSON
-
-TODO: hier sollte null ausreichen.
-
-```json
-"data": {
-  "umfrageID": "dfklj239fhab9d1320f",
-  "bezeichnung": "Umfragename"
-}
-```
-
-
 # Umfrage für Hauptverantwortlicher
 
 Die folgenden Endpunkte sind unter `*/umfrage`  
@@ -726,7 +512,7 @@ Die folgenden Endpunkte sind unter `*/umfrage`
     
 Wird für Mitarbeiterumfragen verwendet, um das Bilanzierungsjahr anzuzeigen.
 
-URL: `GET */umfrage/GetUmfrageYear?id=[...]`  
+URL: `GET */umfrage/umfrageYear?id=[umfrageID]`  
 
 >Übergebene URL Parameter
 
@@ -761,17 +547,7 @@ URL: `GET */umfrage/GetSharedResults?id=[...]`
 
 ## Alle Gebäude aus Datenbank
 
-URL: `POST */umfrage/gebaeude`   
-
->Request JSON
-
-```json
-"authToken": {
-  "username": 	"testuser",
-	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-}
-```
-
+URL: `GET */umfrage/gebaeude`   
 
 >Response JSON
 
@@ -783,16 +559,7 @@ URL: `POST */umfrage/gebaeude`
 
 ## Alle Gebäude und Zähler aus Datenbank
 
-URL: `POST */umfrage/gebaeudeUndZaehler`   
-
->Request JSON
-
-```json
-"authToken": {
-  "username": 	"testuser",
-	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-}
-```
+URL: `GET */umfrage/gebaeudeUndZaehler`   
 
 >Response JSON
 
@@ -823,18 +590,9 @@ URL: `POST */umfrage/gebaeudeUndZaehler`
 
 ## Alle Umfragen aus Datenbank
 
-URL: `POST */umfrage/alleUmfragen`     
+URL: `GET */umfrage/alleUmfragen`     
 
 Admin only
-
->Request JSON
-
-```json
-"authToken": {
-  "username": 	"testuser",
-	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-}
-```
 
 >Response JSON
 
@@ -869,16 +627,7 @@ Admin only
 
 ## Alle Umfragen eines Nutzers
 
-URL: `POST */umfrage/GetAllUmfragenForUser`     
-
->Request JSON
-
-```json
-"authToken": {
-  "username": 	"testuser",
-	"sessiontoken": "efjuhgsdfjh19u34z287rsdjh",
-}
-```
+URL: `GET */umfrage/allUmfragenForUser`     
 
 >Response JSON
 
@@ -933,10 +682,6 @@ URL: `POST */umfrage/insertUmfrage`
       "anzahl": 5
     }
   ],
-  "authToken": {
-    "username": "testuser",
-    "sessiontoken": "545a6scasd8741dfwer"
-  }
 }
 ```
 
@@ -958,10 +703,6 @@ URL: `POST */umfrage/updateUmfrage`
 
 ```json
 {
-  "authToken": {
-    "username": "testuser",
-    "sessiontoken": "545a6scasd8741dfwer"
-  },
   "umfrageID": "981jf9012fnc10ad1", // umfrage ID als String
   "bezeichnung": "Umfragename",
   "mitarbeiteranzahl": 12, //Integer
@@ -995,19 +736,7 @@ TODO kann vermutlich auch null sein, hängt von Adminpanel ab
 
 ## Umfrage aus Datenbank
 
-URL: `POST */umfrage/getUmfrage`      
-
->Request JSON
-
-```json
-{
-  "umfrageID": "aidhb731dh9dh13jd",
-  "authToken": {
-    "username": "testuser",
-    "sessiontoken": "545a6scasd8741dfwer"
-  }
-}
-```
+URL: `POST */umfrage/umfrage?id=[umfrageID]`      
 
 >Response JSON
 
@@ -1043,10 +772,6 @@ URL: `DELETE */umfrage/deleteUmfrage`
 ```json
 {
   "umfrageID": "61cdb9e6d4ca5003d1ce75dc"
-  "authToken": {
-    "username": "testuser"
-    "sessiontoken": "545a6scasd8741dfwer"
-  }
 }
 ```
 
@@ -1065,10 +790,6 @@ URL: `DELETE */umfrage/duplicateUmfrage`
 ```json
 {
   "umfrageID": "61cdb9e6d4ca5003d1ce75dc"
-  "authToken": {
-    "username": "testuser"
-    "sessiontoken": "545a6scasd8741dfwer"
-  }
 }
 ```
 
