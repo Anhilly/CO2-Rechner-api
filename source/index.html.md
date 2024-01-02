@@ -121,6 +121,15 @@ URL: `GET */auswertung?id=[umfrageID]`
     "emissionenPendelwege": 0.0,
     "emissionenGesamt": 0.0,
     "emissionenProMitarbeiter": 0.0,
+    "emissionenDienstreisenAufgeteilt": {   // Map String to Double
+      "name": 0.0
+    },
+    "emissionenPendelwegeAufgeteilt": {     // Map Int to Double
+      "1": 0.0
+    },
+    "emissionenITGeraeteAufgeteilt": {      // Map Int to Double
+      "1": 0.0
+    },
     
     "verbrauchStrom": 0.0,
     "verbrauchWaerme": 0.0,
