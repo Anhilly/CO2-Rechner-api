@@ -125,10 +125,10 @@ URL: `GET */auswertung?id=[umfrageID]`
       "name": 0.0
     },
     "emissionenPendelwegeAufgeteilt": {     // Map Int to Double
-      "1": 0.0
+      1: 0.0
     },
     "emissionenITGeraeteAufgeteilt": {      // Map Int to Double
-      "1": 0.0
+      1: 0.0
     },
     
     "verbrauchStrom": 0.0,
