@@ -26,7 +26,11 @@ Das ist die API Dokumentation für den CO2-Rechner der TU-Darmstadt.
 
 # Überblick über API-Endpunkte
 
-Die folgende API-Endpunkte sind aktuell im Backend definiert. Alle Endpunkte werden aus dem Frontend in mindestens einem Fetch Request aufgerufen.
+Die folgende API-Endpunkte sind aktuell im Backend definiert. 
+
+Anfragen an `*/`
+* `GET */`            (keine Auth)
+* `Get */authRoute`
 
 Anfragen an `*/auswertung`  
 * `GET */auswertung`  (special auth)
@@ -55,11 +59,11 @@ Anfragen an `*/mitarbeiterumfrage`
 Anfragen an `*/umfrage`    
 * `GET */umfrage`
 * `GET */umfrage/duplicate` 
-* `GET */umfrage/jahr`    (keine Auth)
-* `GET */umfrage/sharedResults`  (keine Auth)    
+* `GET */umfrage/jahr`              (keine Auth)
+* `GET */umfrage/sharedResults`     (keine Auth)    
 * `GET */umfrage/gebaeude`
 * `GET */umfrage/gebaeudeUndZaehler` 
-* `GET */umfrage/alleUmfragen`     (admin auth)
+* `GET */umfrage/alleUmfragen`      (admin auth)
 * `GET */umfrage/alleUmfragenVonUser`
 * `POST */umfrage/insert`     
 * `POST */umfrage/update`      
@@ -90,6 +94,22 @@ Im Fehlerfall steht im status Feld der String "error" und im error Feld ist ein 
 ```
 
 Im Nachfolgenden werden wir immer nur die data Felder auflisten.
+
+# Allgemeine Testendpunkte 
+
+Die folgenden Endpunkte sind unter `*/` und dienen dazu die Erreichbarkeit des Backends zu testen.
+
+## Testendpunkt ohne Authentifikation
+URL: `GET */`
+
+>Response im Erfolgsfall nur HTTP Status Code 200.
+
+
+## Testendpunkt mit Authentifikation
+URL: `Get */authRoute`
+
+>Response im Erfolgsfall nur HTTP Status Code 200.
+
 
 # Auswertung
 
