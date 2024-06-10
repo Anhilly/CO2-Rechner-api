@@ -810,6 +810,24 @@ URL: `DELETE */umfrage`
 "data": null
 ```
 
+## Umfrage ID einen Nutzer hinzufügen
+
+URL: `POST */umfrage/share`
+
+>Request JSON 
+
+```json
+{
+  "umfrageID": "61cdb9e6d4ca5003d1ce75dc"
+}
+```
+
+>Response JSON im Erfolgsfall
+
+```json
+"data": null
+```
+
 ## Umfrage duplizieren
 
 URL: `GET */umfrage/duplicate`
