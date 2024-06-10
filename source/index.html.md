@@ -825,20 +825,15 @@ URL: `POST */umfrage/share`
 >Response JSON im Erfolgsfall
 
 ```json
-"data": null
+"data": {
+  "bezeichnung": "umfrage",   // String
+  "hinzugefuegt": true        // Bool
+}
 ```
 
 ## Umfrage duplizieren
 
-URL: `GET */umfrage/duplicate`
-
->Request JSON 
-
-```json
-{
-  "umfrageID": "61cdb9e6d4ca5003d1ce75dc"
-}
-```
+URL: `GET */umfrage/duplicate?id=[umfrageID]`
 
 >Response JSON im Erfolgsfall
 
