@@ -833,7 +833,16 @@ URL: `POST */umfrage/share`
 
 ## Umfrage duplizieren
 
-URL: `GET */umfrage/duplicate?id=[umfrageID]`
+URL: `POST */umfrage/duplicate`
+
+>Request JSON 
+
+```json
+{
+  "umfrageID": "61cdb9e6d4ca5003d1ce75dc",
+  "suffix": "(Kopie)"
+}
+```
 
 >Response JSON im Erfolgsfall
 
