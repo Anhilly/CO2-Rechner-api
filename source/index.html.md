@@ -237,9 +237,10 @@ URL: `POST */db/addZaehlerdaten`
 
 ```json
 {
-  "pkEnergie": 1,   //Integer
+  "dpName": "L302xxxx",     //String
   "idEnergieversorgung": 1, //Integer
   "jahr": 2020,     //Integer
+  "monat": 2,       //Integer
   "wert": 2000.0    //float
 }
 ```
@@ -258,6 +259,7 @@ URL: `POST */db/addStandardZaehlerdaten`
 ```json
 {
   "jahr": 2020,     //Integer
+  "monat": 2,       //Integer
 }
 ```
 
@@ -276,7 +278,8 @@ URL: `POST */db/addZaehlerdatenCSV`
 {
   "pkEnergie": [1],           //Array of Integer
   "idEnergieversorgung": [1], //Array of Integer
-  "jahr": 2020,               //Integer
+  "jahr": [2020],             //Array of Integer
+  "monat": [1],               //Array of Integer
   "wert": [2000.0]            //Array of float
 }
 ```
@@ -332,7 +335,7 @@ URL: `POST */db/insertZaehler`
 
 ```json
 {
-  "pkEnergie": 1,           //Integer
+  "dpName": "L302xxxx",     //String
   "idEnergieversorgung": 1, //Integer
   "bezeichnung": "",
   "einheit": "",
