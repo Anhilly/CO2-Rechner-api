@@ -162,14 +162,14 @@ URL: `GET */auswertung?id=[umfrageID]`
     "gebauedeIDsUndZaehler": [ 
       {	
         "nr": 0,              // Integer
-        "kaelteRef": [0, 0],  // Integer-Array
-        "waermeRef": [0, 0],  // Integer-Array
-        "stromRef": [0, 0],   // Integer-Array
+        "kaelteRef": ["000000000000000000000000", "000000000000000000000000"],  // ObjectID-Array
+        "waermeRef": ["000000000000000000000000", "000000000000000000000000"],  // ObjectID-Array
+        "stromRef": ["000000000000000000000000", "000000000000000000000000"],   // ObjectID-Array
       }
     ],
     "zaehler": [
       {
-        "pkEnergie": 0,         // Integer
+        "zaehlerID": "000000000000000000000000",  // ObjectID
         "zaehlerdatenVorhanden": [
           {
             "jahr": 2000,       // Integer
@@ -276,7 +276,7 @@ URL: `POST */db/addZaehlerdatenCSV`
 
 ```json
 {
-  "pkEnergie": [1],           //Array of Integer
+  "dpName": ["L302xxxx"],     //Array of String
   "idEnergieversorgung": [1], //Array of Integer
   "jahr": [2020],             //Array of Integer
   "monat": [1],               //Array of Integer
@@ -600,14 +600,14 @@ URL: `GET */umfrage/gebaeudeUndZaehler`
   "gebaeude": [ 
     {	
       "nr": 0,              // Integer
-      "kaelteRef": [0, 0],  // Integer-Array
-      "waermeRef": [0, 0],  // Integer-Array
-      "stromRef": [0, 0],   // Integer-Array
+      "kaelteRef": ["000000000000000000000000", "000000000000000000000000"],  // ObjectID-Array
+      "waermeRef": ["000000000000000000000000", "000000000000000000000000"],  // ObjectID-Array
+      "stromRef": ["000000000000000000000000", "000000000000000000000000"],   // ObjectID-Array
     }
   ],
   "zaehler": [
     {
-      "pkEnergie": 0,         // Integer
+      "zaehlerID": "000000000000000000000000",  // ObjectID
       "zaehlerdatenVorhanden": [
         {
           "jahr": 2000,       // Integer
